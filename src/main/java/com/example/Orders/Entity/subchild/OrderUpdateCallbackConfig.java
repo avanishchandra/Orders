@@ -3,7 +3,7 @@ package com.example.Orders.Entity.subchild;
 import java.util.List;
 import java.util.UUID;
 
-import com.example.Orders.Entity.CallbackEvents;
+import com.example.Orders.Entity.leaf.CallbackEvents;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

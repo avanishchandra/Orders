@@ -3,14 +3,33 @@ package com.example.Orders.ServiceImpl;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.example.Orders.DTO.parentDTOs.AddTrackingRequestDTO;
+import com.example.Orders.DTO.parentDTOs.AuthorizeOrderRequestDTO;
+import com.example.Orders.DTO.parentDTOs.CaptureOrderRequestDTO;
+import com.example.Orders.DTO.parentDTOs.ConfirmOrderRequestDTO;
+import com.example.Orders.DTO.parentDTOs.CreateOrderRequestDTO;
+import com.example.Orders.DTO.parentDTOs.OrderDetailsResponseDTO;
+import com.example.Orders.DTO.parentDTOs.UpdateOrderCallbackRequestDTO;
+import com.example.Orders.DTO.parentDTOs.UpdateOrderRequestDTO;
+import com.example.Orders.DTO.parentDTOs.UpdateTrackingRequestDTO;
+import com.example.Orders.DTO.responseDTOs.AddTrackingResponseDTO;
+import com.example.Orders.DTO.responseDTOs.AuthorizeOrderResponseDTO;
+import com.example.Orders.DTO.responseDTOs.CaptureOrderResponseDTO;
+import com.example.Orders.DTO.responseDTOs.ConfirmOrderResponseDTO;
+import com.example.Orders.DTO.responseDTOs.CreateOrderResponseDTO;
+import com.example.Orders.DTO.responseDTOs.UpdateOrderCallbackResponseDTO;
+import com.example.Orders.DTO.responseDTOs.UpdateOrderResponseDTO;
+import com.example.Orders.DTO.responseDTOs.UpdateTrackingResponseDTO;
 import com.example.Orders.Service.OrderService;
-import com.example.Orders.DTO.parentDTOs.*;
-import com.example.Orders.DTO.responseDTOs.*;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -90,7 +109,7 @@ public class OrderServiceImpl implements OrderService {
         return response.getBody();
     }
 
-    /**
+/**
      * 2. SHOW ORDER DETAILS
      */
     @Override
@@ -110,8 +129,9 @@ public class OrderServiceImpl implements OrderService {
 
         HttpEntity<Void> request = new HttpEntity<>(headers);
 
+        // 🛠️ FIX APPLIED HERE: Changed fromHttpUrl to fromUriString
         String url = UriComponentsBuilder
-                .fromHttpUrl(BASE_URL + "/" + orderId)
+                .fromUriString(BASE_URL + "/" + orderId)
                 .queryParamIfPresent("fields", Optional.ofNullable(fields))
                 .toUriString();
 

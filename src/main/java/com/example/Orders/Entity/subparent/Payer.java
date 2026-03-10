@@ -2,10 +2,10 @@ package com.example.Orders.Entity.subparent;
 
 import java.util.UUID;
 
-import com.example.Orders.Entity.Name;
-import com.example.Orders.Entity.address;
-import com.example.Orders.Entity.phone;
-import com.example.Orders.Entity.tax_info;
+import com.example.Orders.Entity.leaf.Name;
+import com.example.Orders.Entity.leaf.address;
+import com.example.Orders.Entity.leaf.phone;
+import com.example.Orders.Entity.leaf.tax_info;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

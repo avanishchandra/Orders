@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 // IMPORT FIX: This line lets this file see ItemTotal, Shipping, etc.
-import com.example.Orders.Entity.*;
+import com.example.Orders.Entity.leaf.*;
 
 @Entity
 @Table(name = "amount_breakdown")

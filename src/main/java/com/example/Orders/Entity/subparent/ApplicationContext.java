@@ -2,7 +2,7 @@ package com.example.Orders.Entity.subparent;
 
 import java.util.UUID;
 
-import com.example.Orders.Entity.PreviousNetworkTransactionReference;
+import com.example.Orders.Entity.leaf.PreviousNetworkTransactionReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

@@ -2,8 +2,8 @@ package com.example.Orders.Entity.subchild;
 
 import java.util.UUID;
 
-import com.example.Orders.Entity.Price;
-import com.example.Orders.Entity.ReloadThresholdAmount;
+import com.example.Orders.Entity.leaf.Price;
+import com.example.Orders.Entity.leaf.ReloadThresholdAmount;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

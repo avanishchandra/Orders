@@ -2,8 +2,8 @@ package com.example.Orders.Entity.subchild;
 
 import java.util.UUID;
 
-import com.example.Orders.Entity.Name;
-import com.example.Orders.Entity.phone;
+import com.example.Orders.Entity.leaf.Name;
+import com.example.Orders.Entity.leaf.phone;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

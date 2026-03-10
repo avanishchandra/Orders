@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 // IMPORT FIX: Required to find experience_context
-import com.example.Orders.Entity.*;
+import com.example.Orders.Entity.leaf.*;
 
 @Entity
 @Table(name = "giropay")

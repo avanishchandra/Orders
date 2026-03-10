@@ -1,15 +1,24 @@
 package com.example.Orders.Entity.parent;
 
-
 import java.util.List;
-import jakarta.persistence.*;
+import java.util.UUID;
+
+import com.example.Orders.Entity.leaf.Link;
+import com.example.Orders.Entity.subparent.Payer;
+import com.example.Orders.Entity.subparent.PaymentSource;
+import com.example.Orders.Entity.subparent.PurchaseUnit;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.example.Orders.Entity.Link;
-import com.example.Orders.Entity.subparent.Payer;
-import com.example.Orders.Entity.subparent.PurchaseUnit;
-import com.example.Orders.Entity.subparent.PaymentSource;
 
 @Entity
 @Table(name = "show_order_details")
@@ -20,7 +29,7 @@ public class ShowOrderDetails {
 
     @Id
     @Column(name = "id", updatable = false, nullable = false)
-    private String id; // Maps the external Order ID (e.g., "5O190127TN457281P")
+    private UUID id; // Maps the external Order ID (e.g., "5O190127TN457281P")
 
     @Column(name = "status")
     private String status;

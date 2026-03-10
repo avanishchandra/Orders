@@ -2,8 +2,8 @@ package com.example.Orders.Entity.subchild;
 
 import java.util.UUID;
 
-import com.example.Orders.Entity.amount;
-import com.example.Orders.Entity.payee;
+import com.example.Orders.Entity.leaf.amount;
+import com.example.Orders.Entity.leaf.payee;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

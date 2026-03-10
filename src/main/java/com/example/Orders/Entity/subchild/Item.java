@@ -2,9 +2,9 @@ package com.example.Orders.Entity.subchild;
 
 import java.util.UUID;
 
-import com.example.Orders.Entity.Tax;
-import com.example.Orders.Entity.UnitAmount;
-import com.example.Orders.Entity.Upc;
+import com.example.Orders.Entity.leaf.Tax;
+import com.example.Orders.Entity.leaf.UnitAmount;
+import com.example.Orders.Entity.leaf.Upc;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

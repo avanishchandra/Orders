@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.example.Orders.Entity.*;
+import com.example.Orders.Entity.leaf.*;
 import com.example.Orders.Entity.subchild.*;
 
 @Entity

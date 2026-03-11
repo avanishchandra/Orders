@@ -1,361 +1,208 @@
 package com.example.Orders.ServiceImpl;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import com.example.Orders.DTO.parentDTOs.AddTrackingRequestDTO;
-import com.example.Orders.DTO.parentDTOs.AuthorizeOrderRequestDTO;
-import com.example.Orders.DTO.parentDTOs.CaptureOrderRequestDTO;
-import com.example.Orders.DTO.parentDTOs.ConfirmOrderRequestDTO;
-import com.example.Orders.DTO.parentDTOs.CreateOrderRequestDTO;
-import com.example.Orders.DTO.parentDTOs.OrderDetailsResponseDTO;
-import com.example.Orders.DTO.parentDTOs.UpdateOrderCallbackRequestDTO;
-import com.example.Orders.DTO.parentDTOs.UpdateOrderRequestDTO;
-import com.example.Orders.DTO.parentDTOs.UpdateTrackingRequestDTO;
-import com.example.Orders.DTO.responseDTOs.AddTrackingResponseDTO;
-import com.example.Orders.DTO.responseDTOs.AuthorizeOrderResponseDTO;
-import com.example.Orders.DTO.responseDTOs.CaptureOrderResponseDTO;
-import com.example.Orders.DTO.responseDTOs.ConfirmOrderResponseDTO;
-import com.example.Orders.DTO.responseDTOs.CreateOrderResponseDTO;
-import com.example.Orders.DTO.responseDTOs.UpdateOrderCallbackResponseDTO;
-import com.example.Orders.DTO.responseDTOs.UpdateOrderResponseDTO;
-import com.example.Orders.DTO.responseDTOs.UpdateTrackingResponseDTO;
+import com.example.Orders.DTO.parentDTOs.*;
+import com.example.Orders.DTO.responseDTOs.*;
+import com.example.Orders.Entity.parent.*;
+import com.example.Orders.Repository.parentRepository.*;
 import com.example.Orders.Service.OrderService;
 
 @Service
 public class OrderServiceImpl implements OrderService {
 
+    private final AddTrackingInformationForAnOrderRepository addTrackingRepo;
+    private final AuthorizePaymentForOrderRepository authorizeOrderRepo;
+    private final CapturePaymentForOrderRepository captureOrderRepo;
+    private final ConfirmOrderRepository confirmOrderRepo;
+    private final CreateOrderRepository createOrderRepo;
+    private final OrderUpdateCallbackRepository orderUpdateCallbackRepo;
+    private final ShowOrderDetailsRepository showOrderDetailsRepo;
+    private final UpdateOrderRepository updateOrderRepo;
+    private final UpdateOrderTrackerRepository updateOrderTrackerRepo;
+
     @Autowired
-    private RestTemplate restTemplate;
-
-    private static final String BASE_URL =
-            "https://api-m.sandbox.paypal.com/v2/checkout/orders";
-
-    /**
-     * Centralized PayPal header builder
-     */
-    private HttpHeaders buildHeaders(
-            String authorization,
-            String payPalRequestId,
-            String prefer,
-            String payPalClientMetadataId,
-            String payPalPartnerAttributionId,
-            String payPalAuthAssertion) {
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        if (authorization != null)
-            headers.set("Authorization", authorization);
-
-        if (payPalRequestId != null)
-            headers.set("PayPal-Request-Id", payPalRequestId);
-
-        if (prefer != null)
-            headers.set("Prefer", prefer);
-
-        if (payPalClientMetadataId != null)
-            headers.set("PayPal-Client-Metadata-Id", payPalClientMetadataId);
-
-        if (payPalPartnerAttributionId != null)
-            headers.set("PayPal-Partner-Attribution-Id", payPalPartnerAttributionId);
-
-        if (payPalAuthAssertion != null)
-            headers.set("PayPal-Auth-Assertion", payPalAuthAssertion);
-
-        return headers;
+    public OrderServiceImpl(
+            AddTrackingInformationForAnOrderRepository addTrackingRepo,
+            AuthorizePaymentForOrderRepository authorizeOrderRepo,
+            CapturePaymentForOrderRepository captureOrderRepo,
+            ConfirmOrderRepository confirmOrderRepo,
+            CreateOrderRepository createOrderRepo,
+            OrderUpdateCallbackRepository orderUpdateCallbackRepo,
+            ShowOrderDetailsRepository showOrderDetailsRepo,
+            UpdateOrderRepository updateOrderRepo,
+            UpdateOrderTrackerRepository updateOrderTrackerRepo) {
+        
+        this.addTrackingRepo = addTrackingRepo;
+        this.authorizeOrderRepo = authorizeOrderRepo;
+        this.captureOrderRepo = captureOrderRepo;
+        this.confirmOrderRepo = confirmOrderRepo;
+        this.createOrderRepo = createOrderRepo;
+        this.orderUpdateCallbackRepo = orderUpdateCallbackRepo;
+        this.showOrderDetailsRepo = showOrderDetailsRepo;
+        this.updateOrderRepo = updateOrderRepo;
+        this.updateOrderTrackerRepo = updateOrderTrackerRepo;
     }
 
-    /**
-     * 1. CREATE ORDER
-     */
     @Override
     public CreateOrderResponseDTO createOrder(
-            String payPalRequestId,
-            String payPalPartnerAttributionId,
-            String payPalClientMetadataId,
-            String prefer,
-            String authorization,
-            String payPalAuthAssertion,
-            CreateOrderRequestDTO dto) {
+            String payPalRequestId, String payPalPartnerAttributionId, String payPalClientMetadataId,
+            String prefer, String authorization, String payPalAuthAssertion,
+            CreateOrderRequestDTO createOrderRequestDTO) {
 
-        HttpHeaders headers = buildHeaders(
-                authorization,
-                payPalRequestId,
-                prefer,
-                payPalClientMetadataId,
-                payPalPartnerAttributionId,
-                payPalAuthAssertion);
+        // Initialize entities
+        CreateOrder createOrder = new CreateOrder();
 
-        HttpEntity<CreateOrderRequestDTO> request =
-                new HttpEntity<>(dto, headers);
+        // Process DTO Map to Entity
+        if (createOrderRequestDTO != null) {
+            createOrder.setIntent(createOrderRequestDTO.getIntent());
+            // Nested object mapping (e.g., ApplicationContext, Payer, PurchaseUnits would go here)
+        }
 
-        ResponseEntity<CreateOrderResponseDTO> response =
-                restTemplate.exchange(
-                        BASE_URL,
-                        HttpMethod.POST,
-                        request,
-                        CreateOrderResponseDTO.class);
+        // Save entity via Repository
+        createOrder = createOrderRepo.save(createOrder);
 
-        return response.getBody();
+        // Construct response DTO
+        CreateOrderResponseDTO responseDTO = new CreateOrderResponseDTO();
+        // Set fields to responseDTO back from entity if needed
+        return responseDTO;
     }
 
-/**
-     * 2. SHOW ORDER DETAILS
-     */
     @Override
     public OrderDetailsResponseDTO showOrderDetails(
-            String orderId,
-            String fields,
-            String authorization,
-            String payPalAuthAssertion) {
+            String orderId, String fields, String authorization, String payPalAuthAssertion) {
 
-        HttpHeaders headers = buildHeaders(
-                authorization,
-                null,
-                null,
-                null,
-                null,
-                payPalAuthAssertion);
+        // Initialize entities
+        ShowOrderDetails showOrderDetails = new ShowOrderDetails();
 
-        HttpEntity<Void> request = new HttpEntity<>(headers);
+        // Construct/Retrieve via Repository (Assuming custom query to fetch by Order ID exists)
+        // Optionally map any inputs. For a GET request, typically you findById -> map to Response.
 
-        // 🛠️ FIX APPLIED HERE: Changed fromHttpUrl to fromUriString
-        String url = UriComponentsBuilder
-                .fromUriString(BASE_URL + "/" + orderId)
-                .queryParamIfPresent("fields", Optional.ofNullable(fields))
-                .toUriString();
-
-        ResponseEntity<OrderDetailsResponseDTO> response =
-                restTemplate.exchange(
-                        url,
-                        HttpMethod.GET,
-                        request,
-                        OrderDetailsResponseDTO.class);
-
-        return response.getBody();
+        // Construct response DTO
+        OrderDetailsResponseDTO responseDTO = new OrderDetailsResponseDTO();
+        
+        return responseDTO;
     }
 
-    /**
-     * 3. UPDATE ORDER (PATCH)
-     * PayPal returns 204 No Content
-     */
     @Override
     public UpdateOrderResponseDTO updateOrder(
-            String orderId,
-            String authorization,
-            String payPalAuthAssertion,
-            UpdateOrderRequestDTO dto) {
+            String orderId, String authorization, String payPalAuthAssertion,
+            UpdateOrderRequestDTO updateOrderRequestDTO) {
 
-        HttpHeaders headers = buildHeaders(
-                authorization,
-                null,
-                null,
-                null,
-                null,
-                payPalAuthAssertion);
+        // Initialize entities
+        UpdateOrder updateOrder = new UpdateOrder();
 
-        HttpEntity<UpdateOrderRequestDTO> request =
-                new HttpEntity<>(dto, headers);
+        // Save entity via Repository
+        updateOrder = updateOrderRepo.save(updateOrder);
 
-        restTemplate.exchange(
-                BASE_URL + "/" + orderId,
-                HttpMethod.PATCH,
-                request,
-                Void.class);
-
-        return new UpdateOrderResponseDTO();
+        // Construct response DTO
+        UpdateOrderResponseDTO responseDTO = new UpdateOrderResponseDTO();
+        
+        return responseDTO;
     }
 
-    /**
-     * 4. CONFIRM ORDER
-     */
     @Override
     public ConfirmOrderResponseDTO confirmOrder(
-            String orderId,
-            String payPalClientMetadataId,
-            String authorization,
-            String payPalAuthAssertion,
-            String prefer,
-            ConfirmOrderRequestDTO dto) {
+            String orderId, String payPalClientMetadataId, String authorization,
+            String payPalAuthAssertion, String prefer,
+            ConfirmOrderRequestDTO confirmOrderRequestDTO) {
 
-        HttpHeaders headers = buildHeaders(
-                authorization,
-                null,
-                prefer,
-                payPalClientMetadataId,
-                null,
-                payPalAuthAssertion);
+        // Initialize entities
+        ConfirmOrder confirmOrder = new ConfirmOrder();
 
-        HttpEntity<ConfirmOrderRequestDTO> request =
-                new HttpEntity<>(dto, headers);
+        // Save entity via Repository
+        confirmOrder = confirmOrderRepo.save(confirmOrder);
 
-        ResponseEntity<ConfirmOrderResponseDTO> response =
-                restTemplate.exchange(
-                        BASE_URL + "/" + orderId + "/confirm-payment-source",
-                        HttpMethod.POST,
-                        request,
-                        ConfirmOrderResponseDTO.class);
-
-        return response.getBody();
+        // Construct response DTO
+        ConfirmOrderResponseDTO responseDTO = new ConfirmOrderResponseDTO();
+        
+        return responseDTO;
     }
 
-    /**
-     * 5. AUTHORIZE ORDER
-     */
     @Override
     public AuthorizeOrderResponseDTO authorizeOrder(
-            String orderId,
-            String payPalRequestId,
-            String prefer,
-            String payPalClientMetadataId,
-            String authorization,
-            String payPalAuthAssertion,
-            AuthorizeOrderRequestDTO dto) {
+            String orderId, String payPalRequestId, String prefer,
+            String payPalClientMetadataId, String authorization, String payPalAuthAssertion,
+            AuthorizeOrderRequestDTO authorizeOrderRequestDTO) {
 
-        HttpHeaders headers = buildHeaders(
-                authorization,
-                payPalRequestId,
-                prefer,
-                payPalClientMetadataId,
-                null,
-                payPalAuthAssertion);
+        // Initialize entities
+        AuthorizePaymentForOrder authorizePaymentForOrder = new AuthorizePaymentForOrder();
 
-        HttpEntity<AuthorizeOrderRequestDTO> request =
-                new HttpEntity<>(dto, headers);
+        // Save entity via Repository
+        authorizePaymentForOrder = authorizeOrderRepo.save(authorizePaymentForOrder);
 
-        ResponseEntity<AuthorizeOrderResponseDTO> response =
-                restTemplate.exchange(
-                        BASE_URL + "/" + orderId + "/authorize",
-                        HttpMethod.POST,
-                        request,
-                        AuthorizeOrderResponseDTO.class);
-
-        return response.getBody();
+        // Construct response DTO
+        AuthorizeOrderResponseDTO responseDTO = new AuthorizeOrderResponseDTO();
+        
+        return responseDTO;
     }
 
-    /**
-     * 6. CAPTURE ORDER
-     */
     @Override
     public CaptureOrderResponseDTO captureOrder(
-            String orderId,
-            String payPalRequestId,
-            String prefer,
-            String payPalClientMetadataId,
-            String authorization,
-            String payPalAuthAssertion,
-            CaptureOrderRequestDTO dto) {
+            String orderId, String payPalRequestId, String prefer,
+            String payPalClientMetadataId, String authorization, String payPalAuthAssertion,
+            CaptureOrderRequestDTO captureOrderRequestDTO) {
 
-        HttpHeaders headers = buildHeaders(
-                authorization,
-                payPalRequestId,
-                prefer,
-                payPalClientMetadataId,
-                null,
-                payPalAuthAssertion);
+        // Initialize entities
+        CapturePaymentForOrder capturePaymentForOrder = new CapturePaymentForOrder();
 
-        HttpEntity<CaptureOrderRequestDTO> request =
-                new HttpEntity<>(dto, headers);
+        // Save entity via Repository
+        capturePaymentForOrder = captureOrderRepo.save(capturePaymentForOrder);
 
-        ResponseEntity<CaptureOrderResponseDTO> response =
-                restTemplate.exchange(
-                        BASE_URL + "/" + orderId + "/capture",
-                        HttpMethod.POST,
-                        request,
-                        CaptureOrderResponseDTO.class);
-
-        return response.getBody();
+        // Construct response DTO
+        CaptureOrderResponseDTO responseDTO = new CaptureOrderResponseDTO();
+        
+        return responseDTO;
     }
 
-    /**
-     * 7. ADD TRACKING
-     */
     @Override
     public AddTrackingResponseDTO addTracking(
-            String orderId,
-            String authorization,
-            String payPalAuthAssertion,
-            AddTrackingRequestDTO dto) {
+            String orderId, String authorization, String payPalAuthAssertion,
+            AddTrackingRequestDTO addTrackingRequestDTO) {
 
-        HttpHeaders headers = buildHeaders(
-                authorization,
-                null,
-                null,
-                null,
-                null,
-                payPalAuthAssertion);
+        // Initialize entities
+        AddTrackingInformationForAnOrder addTrackingInfo = new AddTrackingInformationForAnOrder();
 
-        HttpEntity<AddTrackingRequestDTO> request =
-                new HttpEntity<>(dto, headers);
+        // Save entity via Repository
+        addTrackingInfo = addTrackingRepo.save(addTrackingInfo);
 
-        ResponseEntity<AddTrackingResponseDTO> response =
-                restTemplate.exchange(
-                        BASE_URL + "/" + orderId + "/track",
-                        HttpMethod.POST,
-                        request,
-                        AddTrackingResponseDTO.class);
-
-        return response.getBody();
+        // Construct response DTO
+        AddTrackingResponseDTO responseDTO = new AddTrackingResponseDTO();
+        
+        return responseDTO;
     }
 
-    /**
-     * 8. UPDATE TRACKING (PATCH)
-     * Returns 204 No Content
-     */
     @Override
     public UpdateTrackingResponseDTO updateTracking(
-            String orderId,
-            String trackerId,
-            String authorization,
-            String payPalAuthAssertion,
-            UpdateTrackingRequestDTO dto) {
+            String orderId, String trackerId, String authorization, String payPalAuthAssertion,
+            UpdateTrackingRequestDTO updateTrackingRequestDTO) {
 
-        HttpHeaders headers = buildHeaders(
-                authorization,
-                null,
-                null,
-                null,
-                null,
-                payPalAuthAssertion);
+        // Initialize entities
+        UpdateOrderTracker updateOrderTracker = new UpdateOrderTracker();
 
-        HttpEntity<UpdateTrackingRequestDTO> request =
-                new HttpEntity<>(dto, headers);
+        // Save entity via Repository
+        updateOrderTracker = updateOrderTrackerRepo.save(updateOrderTracker);
 
-        restTemplate.exchange(
-                BASE_URL + "/" + orderId + "/trackers/" + trackerId,
-                HttpMethod.PATCH,
-                request,
-                Void.class);
-
-        return new UpdateTrackingResponseDTO();
+        // Construct response DTO
+        UpdateTrackingResponseDTO responseDTO = new UpdateTrackingResponseDTO();
+        
+        return responseDTO;
     }
 
-    /**
-     * 9. UPDATE ORDER CALLBACK (WEBHOOK HANDLER)
-     */
     @Override
     public UpdateOrderCallbackResponseDTO updateOrderCallback(
-            String authorization,
-            UpdateOrderCallbackRequestDTO dto) {
+            String authorization, UpdateOrderCallbackRequestDTO updateOrderCallbackRequestDTO) {
 
-        // In production this method should:
-        // 1. Validate PayPal webhook signature
-        // 2. Parse webhook event
-        // 3. Update database state
+        // Initialize entities
+        OrderUpdateCallback orderUpdateCallback = new OrderUpdateCallback();
 
-        UpdateOrderCallbackResponseDTO response =
-                new UpdateOrderCallbackResponseDTO();
+        // Save entity via Repository
+        orderUpdateCallback = orderUpdateCallbackRepo.save(orderUpdateCallback);
 
-        return response;
+        // Construct response DTO
+        UpdateOrderCallbackResponseDTO responseDTO = new UpdateOrderCallbackResponseDTO();
+        
+        return responseDTO;
     }
 }

@@ -40,7 +40,7 @@ public class ApplePay {
 
     // Mapping 'phone_number' object to the 'phone' entity in Context
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "national_number", referencedColumnName = "national_number")
+    @JoinColumn(name = "phone_id", referencedColumnName = "id")
     private phone phoneNumber;
 
     // Using lowercase class name as defined in your LEAF ENTITY CONTEXT

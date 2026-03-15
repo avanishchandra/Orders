@@ -48,7 +48,7 @@ public class Payer {
 
     // Leaf Entity
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "national_number", referencedColumnName = "national_number")
+    @JoinColumn(name = "phone_id", referencedColumnName = "id")
     private phone phone;
 
     // Leaf Entity

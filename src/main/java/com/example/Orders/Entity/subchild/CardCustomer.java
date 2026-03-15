@@ -36,8 +36,9 @@ public class CardCustomer {
     private String emailAddress;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "national_number", referencedColumnName = "national_number")
+    @JoinColumn(name = "phone_id", referencedColumnName = "id")
     private phone phone;
+
     
     // Nested Name object (given_name, surname) isn't in Leaf Context explicitly as a standalone 
     // strictly for this usage, but if you have a Name leaf, use it:

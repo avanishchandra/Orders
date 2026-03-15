@@ -1,11 +1,25 @@
 package com.example.Orders.Entity.subchild;
 
 import java.util.UUID;
-import jakarta.persistence.*;
+
+import com.example.Orders.Entity.leaf.Name;
+import com.example.Orders.Entity.leaf.address;
+import com.example.Orders.Entity.leaf.experience_context;
+import com.example.Orders.Entity.leaf.phone;
+import com.example.Orders.Entity.leaf.tax_info;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.example.Orders.Entity.leaf.*;
 
 @Entity
 @Table(name = "paypal")
@@ -37,8 +51,9 @@ public class Paypal {
     private Name name;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "national_number", referencedColumnName = "national_number")
+    @JoinColumn(name = "phone_id", referencedColumnName = "id")
     private phone phone;
+
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "tax_info_id", referencedColumnName = "id")

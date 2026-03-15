@@ -21,7 +21,7 @@ public class phone {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "national_number", nullable = false, unique = true)
+    @Column(name = "national_number", nullable = false)
     private String nationalNumber;
 
 }

@@ -1,0 +1,446 @@
+{
+  "application_context": {
+    "brand_name": "Example Store, Inc.",
+    "return_url": "https://www.examplestore.com/checkout/success",
+    "cancel_url": "https://www.examplestore.com/checkout/cancel",
+    "locale": "en-US",
+    "stored_payment_source": {
+      "payment_initiator": "MERCHANT",
+      "payment_type": "RECURRING",
+      "usage": "SUBSEQUENT",
+      "previous_network_transaction_reference": {
+        "id": "123456789012345678",
+        "date": "0225",
+        "acquirer_reference_number": "ARN123456789012",
+        "network": "VISA"
+      }
+    }
+  },
+  "payment_source": {
+    "card": {
+      "name": "John Doe",
+      "number": "4111111111111111",
+      "security_code": "123",
+      "expiry": "2028-12",
+      "billing_address": {
+        "address_line_1": "123 Main Street",
+        "address_line_2": "Suite 101",
+        "admin_area_2": "San Francisco",
+        "admin_area_1": "CA",
+        "postal_code": "94105",
+        "country_code": "US"
+      },
+      "attributes": {
+        "customer": {
+          "id": "customer_12345",
+          "email_address": "customer@example.com",
+          "phone": {
+            "phone_type": "MOBILE",
+            "phone_number": {
+              "national_number": "4155551234"
+            }
+          },
+          "name": {
+            "given_name": "John",
+            "surname": "Doe"
+          },
+          "merchant_customer_id": "merchant_cust_789"
+        },
+        "vault": {
+          "store_in_vault": "ON_SUCCESS"
+        },
+        "verification": {
+          "method": "SCA_WHEN_REQUIRED"
+        }
+      },
+      "stored_credential": {
+        "payment_initiator": "CUSTOMER",
+        "payment_type": "ONE_TIME",
+        "usage": "FIRST",
+        "previous_network_transaction_reference": {
+          "id": "876543210987654321",
+          "date": "0125",
+          "acquirer_reference_number": "ARN987654321098",
+          "network": "MASTERCARD"
+        }
+      },
+      "vault_id": "VLT_8shd78shd87sd87",
+      "single_use_token": "SUT_9876sd87fsd98f7sd",
+      "network_token": {
+        "number": "5200000000000007",
+        "cryptogram": "AgAAAAAAAgAAAAAAAgAAAAAAAg==",
+        "token_requestor_id": "12345678901",
+        "expiry": "2028-04",
+        "eci_flag": "MASTERCARD_FULLY_AUTHENTICATED_TRANSACTION"
+      },
+      "token": {
+        "id": "I-ABCDEF123456",
+        "type": "BILLING_AGREEMENT"
+      },
+      "experience_context": {
+        "return_url": "https://example.com/3ds/success",
+        "cancel_url": "https://example.com/3ds/cancel"
+      }
+    },
+    "paypal": {
+      "experience_context": {
+        "brand_name": "My Online Store",
+        "shipping_preference": "GET_FROM_FILE",
+        "contact_preference": "NO_CONTACT_INFO",
+        "landing_page": "LOGIN",
+        "user_action": "PAY_NOW",
+        "payment_method_preference": "UNRESTRICTED",
+        "locale": "en-US",
+        "return_url": "https://example.com/success",
+        "cancel_url": "https://example.com/cancel"
+      },
+      "app_switch_context": {
+        "native_app": {},
+        "mobile_web": {},
+        "buyer_user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+      },
+      "order_update_callback_config": {
+        "callback_events": [
+          "SHIPPING_ADDRESS",
+          "SHIPPING_OPTIONS"
+        ],
+        "callback_url": "https://example.com/paypal/callback?cart_id=12345"
+      },
+      "billing_agreement_id": "I-ABCDEFG12345",
+      "stored_credential": {
+        "payment_initiator": "MERCHANT",
+        "chrage_pattern": "SUBSCRIPTION_PREPAID",
+        "usage_pattern": "SUBSCRIPTION_PREPAID",
+        "usage": "SUBSEQUENT"
+      },
+      "vault_id": "VAULT123456789",
+      "email_address": "customer@example.com",
+      "name": {
+        "given_name": "Pooja",
+        "surname": "Shegar"
+      },
+      "phone": {
+        "phone_type": "MOBILE",
+        "phone_number": {
+          "national_number": "9876543210"
+        }
+      },
+      "birth_date": "1995-08-15",
+      "tax_info": {
+        "tax_id": "12345678901",
+        "tax_id_type": "BR_CPF"
+      },
+      "address": {
+        "address_line_1": "123 Main Street",
+        "address_line_2": "Apartment 4B",
+        "admin_area_2": "Mumbai",
+        "admin_area_1": "MH",
+        "postal_code": "400001",
+        "country_code": "IN"
+      },
+      "attributes": {
+        "customer": {
+          "id": "CUST123456789",
+          "email_address": "customer@example.com",
+          "phone": {
+            "phone_type": "MOBILE",
+            "phone_number": {
+              "national_number": "9876543210"
+            }
+          },
+          "name": {
+            "given_name": "Pooja",
+            "surname": "Shegar"
+          },
+          "merchant_customer_id": "MERCHANT_CUST_001"
+        }
+      },
+      "vault": {
+        "store_in_vault": "ON_SUCCESS",
+        "description": "Monthly Premium Subscription Plan",
+        "usage_pattern": "SUBSCRIPTION_PREPAID",
+        "usage_type": "MERCHANT",
+        "customer_type": "CONSUMER",
+        "permit_multiple_payment_tokens": false
+      }
+    },
+    "bancontact": {
+      "name": "Pooja Shegar",
+      "country_code": "BE",
+      "experience_context": {
+        "brand_name": "My Online Store",
+        "shipping_preference": "GET_FROM_FILE",
+        "locale": "nl-BE",
+        "return_url": "https://example.com/success",
+        "cancel_url": "https://example.com/cancel"
+      }
+    },
+    "blik": {
+      "name": "Jan Kowalski",
+      "country_code": "PL",
+      "email": "jan.kowalski@example.com",
+      "experience_context": {
+        "brand_name": "My Online Store",
+        "shipping_preference": "GET_FROM_FILE",
+        "locale": "pl-PL",
+        "return_url": "https://example.com/blik/success",
+        "cancel_url": "https://example.com/blik/cancel",
+        "consumer_user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        "consumer_ip": "192.168.1.100"
+      },
+      "level_0": {
+        "auth_code": "123456"
+      },
+      "one_click": {
+        "auth_code": "654321",
+        "consumer_reference": "CONS_REF_12345",
+        "alias_label": "mBank Personal",
+        "alias_key": "MBANK123456789"
+      }
+    },
+    "eps": {
+      "name": "Franz Huber",
+      "country_code": "AT",
+      "experience_context": {
+        "brand_name": "My Online Store",
+        "shipping_preference": "GET_FROM_FILE",
+        "locale": "de-AT",
+        "return_url": "https://example.com/eps/success",
+        "cancel_url": "https://example.com/eps/cancel"
+      }
+    },
+    "giropay": {
+      "name": "Heinz Müller",
+      "country_code": "DE",
+      "experience_context": {
+        "brand_name": "My Online Store",
+        "shipping_preference": "GET_FROM_FILE",
+        "locale": "de-DE",
+        "return_url": "https://example.com/giropay/success",
+        "cancel_url": "https://example.com/giropay/cancel"
+      }
+    },
+    "ideal": {
+      "name": "Jan van der Berg",
+      "country_code": "NL",
+      "bic": "RABONL2U",
+      "experience_context": {
+        "brand_name": "My Online Store",
+        "shipping_preference": "GET_FROM_FILE",
+        "locale": "nl-NL",
+        "return_url": "https://example.com/ideal/success",
+        "cancel_url": "https://example.com/ideal/cancel"
+      }
+    },
+    "mybank": {
+      "name": "Maria Rossi",
+      "country_code": "IT",
+      "experience_context": {
+        "brand_name": "My Online Store",
+        "shipping_preference": "GET_FROM_FILE",
+        "locale": "it-IT",
+        "return_url": "https://example.com/mybank/success",
+        "cancel_url": "https://example.com/mybank/cancel"
+      }
+    },
+    "p24": {
+      "name": "Katarzyna Nowak",
+      "email": "katarzyna.nowak@example.com",
+      "country_code": "PL",
+      "experience_context": {
+        "brand_name": "My Online Store",
+        "shipping_preference": "GET_FROM_FILE",
+        "locale": "pl-PL",
+        "return_url": "https://example.com/p24/success",
+        "cancel_url": "https://example.com/p24/cancel"
+      }
+    },
+    "sofort": {
+      "name": "Klaus Schmidt",
+      "country_code": "DE",
+      "experience_context": {
+        "brand_name": "My Online Store",
+        "shipping_preference": "GET_FROM_FILE",
+        "locale": "de-DE",
+        "return_url": "https://example.com/sofort/success",
+        "cancel_url": "https://example.com/sofort/cancel"
+      }
+    },
+    "trustly": {
+      "name": "Erik Johansson",
+      "country_code": "SE",
+      "email": "erik.johansson@example.com",
+      "experience_context": {
+        "brand_name": "My Online Store",
+        "shipping_preference": "GET_FROM_FILE",
+        "locale": "sv-SE",
+        "return_url": "https://example.com/trustly/success",
+        "cancel_url": "https://example.com/trustly/cancel"
+      }
+    },
+    "apple_pay": {
+      "id": "apple.pay.transaction.1234567890",
+      "stored_credential": {
+        "payment_initiator": "CUSTOMER",
+        "payment_type": "ONE_TIME",
+        "usage": "FIRST",
+        "previous_network_transaction_reference": {
+          "id": "987654321098765432",
+          "date": "0225",
+          "acquirer_reference_number": "ARN987654321098",
+          "network": "AMEX"
+        }
+      },
+      "attributes": {
+        "customer": {
+          "id": "CUST_APPLE_12345",
+          "email_address": "sarah.johnson@example.com",
+          "phone": {
+            "phone_type": "MOBILE",
+            "phone_number": {
+              "national_number": "2125557890"
+            }
+          },
+          "name": {
+            "given_name": "Sarah",
+            "surname": "Johnson"
+          }
+        }
+      },
+      "vault": {
+        "store_in_vault": "ON_SUCCESS",
+        "name": "Sarah Johnson",
+        "email_address": "sarah.johnson@example.com",
+        "phone_number": {
+          "national_number": "2125557890"
+        }
+      },
+      "decrypted_token": {
+        "device_manufacturer_id": "0x01F23A4B5C6D7E8F",
+        "payment_data_type": "3DSECURE",
+        "transaction_amount": {
+          "currency_code": "USD",
+          "value": "149.99"
+        },
+        "tokenized_card": {
+          "name": "Sarah Johnson",
+          "number": "4111111111111111",
+          "expiry": "2028-09",
+          "type": "CREDIT",
+          "brand": "VISA",
+          "billing_address": {
+            "address_line_1": "123 Park Avenue",
+            "address_line_2": "Apt 5B",
+            "admin_area_2": "New York",
+            "admin_area_1": "NY",
+            "postal_code": "10022",
+            "country_code": "US"
+          }
+        }
+      },
+      "payment_data": {
+        "cryptogram": "ARnzF3cX4pQ7sB2vY8kLmN5jH6wR9tU=",
+        "eci_indicator": "05",
+        "emv_data": "0082000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "pin": "7E4A9F2C8B1D6E3F5A7C9B0D2E4F6A8C0B1D3E5F7A9C2E4F6B8D0A2C4E6F8B0D2"
+      },
+      "vault_id": "VAULT_APPLE_987654321",
+      "experience_context": {
+        "return_url": "https://example.com/applepay/success",
+        "cancel_url": "https://example.com/applepay/cancel"
+      }
+    },
+    "google_pay": {
+      "name": "Michael Chen",
+      "email_address": "michael.chen@example.com",
+      "phone_number": {
+        "country_code": "1",
+        "national_number": "4155556789"
+      },
+      "card": {
+        "name": "Michael Chen",
+        "type": "CREDIT",
+        "brand": "VISA",
+        "billing_address": {
+          "address_line_1": "456 Mission Street",
+          "address_line_2": "Floor 12",
+          "admin_area_2": "San Francisco",
+          "admin_area_1": "CA",
+          "postal_code": "94105",
+          "country_code": "US"
+        }
+      },
+      "decrypted_token": {
+        "message_id": "GPay-Txn-20250213-789012345",
+        "message_expiration": "1707897600000",
+        "payment_method": "CARD",
+        "authentication_method": "CRYPTOGRAM_3DS",
+        "cryptogram": "B8vY2kLmN5jH6wR9tUARnzF3cX4pQ7s=",
+        "eci_indicator": "05",
+        "card": {
+          "name": "Michael Chen",
+          "number": "4111111111111111",
+          "expiry": "2028-05",
+          "type": "CREDIT",
+          "brand": "VISA",
+          "billing_address": {
+            "address_line_1": "456 Mission Street",
+            "address_line_2": "Floor 12",
+            "admin_area_2": "San Francisco",
+            "admin_area_1": "CA",
+            "postal_code": "94105",
+            "country_code": "US"
+          }
+        }
+      },
+      "assurance_details": {
+        "account_verified": true,
+        "card_holder_authenticated": true
+      },
+      "experience_context": {
+        "return_url": "https://example.com/googlepay/success",
+        "cancel_url": "https://example.com/googlepay/cancel"
+      }
+    },
+    "venmo": {
+      "experience_context": {
+        "brand_name": "My Online Store",
+        "shipping_preference": "GET_FROM_FILE",
+        "user_action": "PAY_NOW"
+      },
+      "order_update_callback_config": {
+        "callback_events": [
+          "SHIPPING_ADDRESS",
+          "SHIPPING_OPTIONS"
+        ],
+        "callback_url": "https://example.com/venmo/callback?cart_id=12345"
+      },
+      "vault_id": "VAULT_VENMO_987654321",
+      "email_address": "emma.watson@example.com",
+      "attributes": {
+        "customer": {
+          "id": "CUST_VENMO_12345",
+          "email_address": "emma.watson@example.com",
+          "phone": {
+            "phone_type": "MOBILE",
+            "phone_number": {
+              "national_number": "2125554321"
+            }
+          },
+          "name": {
+            "given_name": "Emma",
+            "surname": "Watson"
+          }
+        },
+        "vault": {
+          "store_in_vault": "ON_SUCCESS",
+          "description": "Monthly Subscription - Premium Plan",
+          "usage_pattern": "RECURRING_PREPAID",
+          "usage_type": "MERCHANT",
+          "customer_type": "CONSUMER",
+          "permit_multiple_payment_tokens": false
+        }
+      }
+    }
+  }
+}

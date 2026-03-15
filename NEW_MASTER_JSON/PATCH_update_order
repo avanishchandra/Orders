@@ -1,0 +1,9 @@
+
+[
+  {
+    "op": "replace",
+    "path": "/intent",
+    "value": "CAPTURE",
+    "from": "/intent"
+  }
+]

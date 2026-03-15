@@ -39,8 +39,9 @@ public class GooglePay {
     private String emailAddress;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "national_number", referencedColumnName = "national_number")
+    @JoinColumn(name = "phone_id", referencedColumnName = "id")
     private phone phoneNumber;
+
 
     // Google Pay contains a nested Card object in the JSON
     @OneToOne(cascade = CascadeType.ALL)

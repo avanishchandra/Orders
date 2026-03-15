@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import com.example.Orders.Entity.subparent.ApplicationContext;
 import com.example.Orders.Entity.subparent.Payer;
+import com.example.Orders.Entity.subparent.PaymentSource;
 import com.example.Orders.Entity.subparent.PurchaseUnit;
 
 import jakarta.persistence.CascadeType;
@@ -46,6 +47,11 @@ public class CreateOrder {
     @JoinColumn(name = "create_order_id")
     private List<PurchaseUnit> purchaseUnits;
     
+    // Level 2 Sub-Parent
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "payment_source_id", referencedColumnName = "payment_source_id")
+    private PaymentSource paymentSource;
+
     // Level 2 Sub-Parent
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "application_context_id", referencedColumnName = "application_context_id")

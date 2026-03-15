@@ -1,0 +1,20 @@
+{
+  "tracking_number": "TRK-1234567890",
+  "carrier_name_other": "My Local Courier Service",
+  "carrier": "OTHER",
+  "capture_id": "3C679366HH908993F",
+  "notify_payer": true,
+  "items": [
+    {
+      "name": "Wireless Headphones",
+      "quantity": "1",
+      "sku": "WH-001",
+      "url": "https://example.com/products/wireless-headphones",
+      "image_url": "https://example.com/images/wireless-headphones.jpg",
+      "upc": {
+        "type": "UPC-A",
+        "code": "123456789012"
+      }
+    }
+  ]
+}

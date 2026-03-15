@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import com.example.Orders.DTO.subparentDTOs.ApplicationContextDTO;
 import com.example.Orders.DTO.subparentDTOs.PayerDTO;
+import com.example.Orders.DTO.subparentDTOs.PaymentSourceDTO;
 import com.example.Orders.DTO.subparentDTOs.PurchaseUnitDTO;
 
 @Data
@@ -22,6 +23,9 @@ public class CreateOrderRequestDTO {
 
     @JsonProperty("purchase_units")
     private List<PurchaseUnitDTO> purchaseUnits;
+
+    @JsonProperty("payment_source")
+    private PaymentSourceDTO paymentSource;
 
     @JsonProperty("application_context")
     private ApplicationContextDTO applicationContext;

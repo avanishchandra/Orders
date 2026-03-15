@@ -1,0 +1,647 @@
+{
+  "create_time": "2026-02-13T12:00:00Z",
+  "update_time": "2026-02-13T12:00:00Z",
+  "id": "5O190127TN457281P",
+  "purchase_units": [
+    {
+      "reference_id": "PU-001",
+      "description": "Premium Subscription Product Order",
+      "custom_id": "CUST-REF-001",
+      "invoice_id": "INV-2026-001",
+      "soft_descriptor": "SUBSCRIPTION",
+      "amount": {
+        "currency_code": "USD",
+        "value": "55.00",
+        "breakdown": {
+          "item_total": {
+            "currency_code": "USD",
+            "value": "50.00"
+          },
+          "shipping": {
+            "currency_code": "USD",
+            "value": "0.00"
+          },
+          "handling": {
+            "currency_code": "USD",
+            "value": "0.00"
+          },
+          "tax_total": {
+            "currency_code": "USD",
+            "value": "5.00"
+          },
+          "insurance": {
+            "currency_code": "USD",
+            "value": "0.00"
+          },
+          "shipping_discount": {
+            "currency_code": "USD",
+            "value": "0.00"
+          },
+          "discount": {
+            "currency_code": "USD",
+            "value": "0.00"
+          }
+        }
+      },
+      "payee": {
+        "email_address": "merchant@example.com",
+        "merchant_id": "MERCHANT12345"
+      },
+      "payment_instruction": {
+        "platform_fees": [
+          {
+            "amount": {
+              "currency_code": "USD",
+              "value": "5.00"
+            },
+            "payee": {
+              "email_address": "platform@example.com",
+              "merchant_id": "PLATFORM12345"
+            }
+          }
+        ],
+        "payee_pricing_tier_id": "TIER_STANDARD",
+        "payee_receivable_fx_rate_id": "FX_RATE_001",
+        "disbursement_mode": "INSTANT"
+      },
+      "items": [
+        {
+          "name": "Premium Monthly Plan",
+          "quantity": "1",
+          "description": "Access to premium digital subscription services",
+          "sku": "PREM-MONTH-001",
+          "url": "https://example.com/products/premium-monthly",
+          "image_url": "https://example.com/images/premium-monthly.png",
+          "category": "DIGITAL_GOODS",
+          "commodity_code": "DIGI001",
+          "unit_of_measure": "EA",
+          "unit_amount": {
+            "currency_code": "USD",
+            "value": "50.00"
+          },
+          "tax": {
+            "currency_code": "USD",
+            "value": "5.00"
+          },
+          "discount_amount": {
+            "currency_code": "USD",
+            "value": "0.00"
+          },
+          "total_amount": {
+            "currency_code": "USD",
+            "value": "55.00"
+          },
+          "upc": {
+            "type": "UPC-A",
+            "code": "123456789012"
+          }
+        }
+      ],
+      "shipping": {
+        "name": {
+          "full_name": "John Doe"
+        },
+        "type": "SHIPPING",
+        "address": {
+          "address_line_1": "123 Main Street",
+          "address_line_2": "Apartment 4B",
+          "admin_area_2": "San Jose",
+          "admin_area_1": "CA",
+          "postal_code": "95131",
+          "country_code": "US"
+        },
+        "options": [
+          {
+            "id": "SHIP-STD",
+            "label": "Standard Shipping",
+            "type": "SHIPPING",
+            "selected": true,
+            "amount": {
+              "currency_code": "USD",
+              "value": "0.00"
+            }
+          }
+        ],
+        "email_address": "customer@example.com",
+        "phone_number": {
+          "country_code": "1",
+          "national_number": "5551234567"
+        }
+      },
+      "billing_plan": {
+        "billing_cycles": [
+          {
+            "tenure_type": "REGULAR",
+            "total_cycles": 12,
+            "sequence": 1,
+            "pricing_scheme": {
+              "pricing_model": "FIXED",
+              "price": {
+                "currency_code": "USD",
+                "value": "50.00"
+              },
+              "reload_threshold_amount": {
+                "currency_code": "USD",
+                "value": "10.00"
+              },
+              "start_date": "2026-01-01"
+            }
+          }
+        ],
+        "name": "Premium Annual Billing Plan",
+        "setup_fee": {
+          "currency_code": "USD",
+          "value": "0.00"
+        }
+      },
+      "supplementary_data": {
+        "card": {
+          "level_2": {
+            "invoice_id": "INV-2026-001",
+            "tax_total": {
+              "currency_code": "USD",
+              "value": "5.00"
+            }
+          },
+          "level_3": {
+            "ships_from_postal_code": "95131",
+            "line_items": [
+              {
+                "name": "Premium Monthly Plan",
+                "quantity": "1",
+                "description": "Access to premium digital subscription services",
+                "sku": "PREM-MONTH-001",
+                "url": "https://example.com/products/premium-monthly",
+                "image_url": "https://example.com/images/premium-monthly.png",
+                "commodity_code": "DIGI001",
+                "unit_of_measure": "EA",
+                "unit_amount": {
+                  "currency_code": "USD",
+                  "value": "50.00"
+                },
+                "tax_amount": {
+                  "currency_code": "USD",
+                  "value": "5.00"
+                },
+                "discount_amount": {
+                  "currency_code": "USD",
+                  "value": "0.00"
+                },
+                "total_amount": {
+                  "currency_code": "USD",
+                  "value": "55.00"
+                }
+              }
+            ],
+            "shipping_amount": {
+              "currency_code": "USD",
+              "value": "0.00"
+            },
+            "discount_amount": {
+              "currency_code": "USD",
+              "value": "0.00"
+            },
+            "duty_amount": {
+              "currency_code": "USD",
+              "value": "0.00"
+            }
+          }
+        }
+      },
+      "shipping_address": {
+        "address_line_1": "123 Main Street",
+        "address_line_2": "Apartment 4B",
+        "admin_area_2": "San Jose",
+        "admin_area_1": "CA",
+        "postal_code": "95131",
+        "country_code": "US"
+      },
+      "risk": {
+        "customer": {
+          "ip_address": "203.0.113.45"
+        }
+      }
+    }
+  ],
+  "links": [
+    {
+      "href": "https://api-m.sandbox.paypal.com/v2/checkout/orders/5O190127TN457281P",
+      "rel": "self",
+      "method": "GET"
+    },
+    {
+      "href": "https://www.sandbox.paypal.com/checkoutnow?token=5O190127TN457281P",
+      "rel": "approve",
+      "method": "GET"
+    },
+    {
+      "href": "https://api-m.sandbox.paypal.com/v2/checkout/orders/5O190127TN457281P",
+      "rel": "update",
+      "method": "PATCH"
+    },
+    {
+      "href": "https://api-m.sandbox.paypal.com/v2/checkout/orders/5O190127TN457281P/capture",
+      "rel": "capture",
+      "method": "POST"
+    }
+  ],
+  "payment_source": {
+    "card": {
+      "name": "John Doe",
+      "number": "411111xxxxxx1111",
+      "expiry": "2028-04",
+      "billing_address": {
+        "address_line_1": "173 Drury Lane",
+        "address_line_2": "Suite 5A",
+        "admin_area_2": "London",
+        "admin_area_1": "LND",
+        "postal_code": "WC2B 5QT",
+        "country_code": "GB"
+      },
+      "attributes": {
+        "customer": {
+          "id": "CUST1234567890",
+          "email_address": "john.doe@example.com",
+          "phone": {
+            "phone_type": "MOBILE",
+            "phone_number": {
+              "national_number": "9876543210"
+            }
+          },
+          "name": {
+            "given_name": "John",
+            "surname": "Doe"
+          },
+          "merchant_customer_id": "MERCHANT_CUST_001"
+        },
+        "vault": {
+          "store_in_vault": "ON_SUCCESS"
+        },
+        "verification": {
+          "method": "SCA_WHEN_REQUIRED"
+        }
+      },
+      "stored_credential": {
+        "payment_initiator": "CUSTOMER",
+        "payment_type": "ONE_TIME",
+        "usage": "FIRST",
+        "previous_network_transaction_reference": {
+          "id": "ABC123456789",
+          "date": "2024-01-01",
+          "network": "VISA",
+          "acquirer_reference_number": "123456789012345"
+        }
+      },
+      "vault_id": "VLT123456789",
+      "single_use_token": "SUT123456789",
+      "network_token": {
+        "number": "411111xxxxxx1111",
+        "cryptogram": "AgAAAAAAABk8A4eUAAAAAAA=",
+        "token_requestor_id": "12345678901",
+        "expiry": "2028-04",
+        "eci_flag": "FULLY_AUTHENTICATED_TRANSACTION"
+      },
+      "experience_context": {
+        "return_url": "https://example.com/3ds-return",
+        "cancel_url": "https://example.com/3ds-cancel"
+      }
+    },
+    "token": {
+      "id": "I-BW452GLLEP1G",
+      "type": "BILLING_AGREEMENT"
+    },
+    "paypal": {
+      "experience_context": {
+        "brand_name": "Example Store",
+        "locale": "en-US",
+        "landing_page": "LOGIN",
+        "shipping_preference": "GET_FROM_FILE",
+        "user_action": "CONTINUE",
+        "payment_method_preference": "UNRESTRICTED",
+        "return_url": "https://example.com/return",
+        "cancel_url": "https://example.com/cancel",
+        "app_switch_context": {
+          "native_app": {},
+          "mobile_web": {
+            "buyer_user_agent": "Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36"
+          }
+        },
+        "contact_preference": "NO_CONTACT_INFO"
+      },
+      "order_update_callback_config": {
+        "callback_events": [
+          "SHIPPING_ADDRESS",
+          "SHIPPING_OPTIONS"
+        ],
+        "callback_url": "https://example.com/api/paypal/order-update-callback"
+      },
+      "billing_agreement_id": "I-BW452GLLEP1G",
+      "stored_credential": {
+        "payment_initiator": "CUSTOMER",
+        "charge_pattern": "RECURRING_POSTPAID",
+        "usage": "FIRST"
+      },
+      "vault_id": "VLT-PP-123456789",
+      "email_address": "buyer@example.com",
+      "name": {
+        "given_name": "John",
+        "surname": "Doe"
+      },
+      "phone": {
+        "phone_type": "MOBILE",
+        "phone_number": {
+          "national_number": "9876543210"
+        }
+      },
+      "birth_date": "1990-01-01",
+      "tax_info": {
+        "tax_id": "12345678901",
+        "tax_id_type": "BR_CPF"
+      },
+      "address": {
+        "address_line_1": "173 Drury Lane",
+        "address_line_2": "Suite 5A",
+        "admin_area_2": "London",
+        "admin_area_1": "LND",
+        "postal_code": "WC2B5QT",
+        "country_code": "GB"
+      },
+      "attributes": {
+        "customer": {
+          "id": "CUST-PP-123456",
+          "email_address": "buyer@example.com",
+          "phone": {
+            "phone_type": "MOBILE",
+            "phone_number": {
+              "national_number": "9876543210"
+            }
+          },
+          "name": {
+            "given_name": "John",
+            "surname": "Doe"
+          },
+          "merchant_customer_id": "MERCHANT_CUST_001"
+        },
+        "vault": {
+          "store_in_vault": "ON_SUCCESS",
+          "description": "Vault PayPal account for future recurring payments",
+          "usage_pattern": "RECURRING_POSTPAID",
+          "usage_type": "MERCHANT",
+          "customer_type": "CONSUMER",
+          "permit_multiple_payment_tokens": false
+        }
+      }
+    },
+    "bancontact": {
+      "name": "John Doe",
+      "country_code": "BE",
+      "experience_context": {
+        "brand_name": "Example Store",
+        "locale": "nl-BE",
+        "shipping_preference": "GET_FROM_FILE",
+        "return_url": "https://example.com/return",
+        "cancel_url": "https://example.com/cancel"
+      }
+    },
+    "blik": {
+      "name": "Jan Kowalski",
+      "country_code": "PL",
+      "email": "jan.kowalski@example.pl",
+      "experience_context": {
+        "brand_name": "Example Store",
+        "locale": "pl-PL",
+        "shipping_preference": "GET_FROM_FILE",
+        "return_url": "https://example.com/return",
+        "cancel_url": "https://example.com/cancel",
+        "consumer_user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "consumer_ip": "192.168.1.10"
+      },
+      "level_0": {
+        "auth_code": "123456"
+      },
+      "one_click": {
+        "auth_code": "654321",
+        "consumer_reference": "BLIK-CONSUMER-001",
+        "alias_label": "Primary Bank Account",
+        "alias_key": "ALIAS123456789"
+      }
+    },
+    "eps": {
+      "name": "Max Mustermann",
+      "country_code": "AT",
+      "experience_context": {
+        "brand_name": "Example Store",
+        "locale": "de-AT",
+        "shipping_preference": "GET_FROM_FILE",
+        "return_url": "https://example.com/return",
+        "cancel_url": "https://example.com/cancel"
+      }
+    },
+    "giropay": {
+      "name": "Max Mustermann",
+      "country_code": "DE",
+      "experience_context": {
+        "brand_name": "Example Store",
+        "locale": "de-DE",
+        "shipping_preference": "GET_FROM_FILE",
+        "return_url": "https://example.com/return",
+        "cancel_url": "https://example.com/cancel"
+      }
+    },
+    "ideal": {
+      "name": "Jan Jansen",
+      "country_code": "NL",
+      "bic": "INGBNL2A",
+      "experience_context": {
+        "brand_name": "Example Store",
+        "locale": "nl-NL",
+        "shipping_preference": "GET_FROM_FILE",
+        "return_url": "https://example.com/return",
+        "cancel_url": "https://example.com/cancel"
+      }
+    },
+    "mybank": {
+      "name": "Luca Rossi",
+      "country_code": "IT",
+      "experience_context": {
+        "brand_name": "Example Store",
+        "locale": "it-IT",
+        "shipping_preference": "GET_FROM_FILE",
+        "return_url": "https://example.com/return",
+        "cancel_url": "https://example.com/cancel"
+      }
+    },
+    "p24": {
+      "name": "Jan Kowalski",
+      "email": "jan.kowalski@example.pl",
+      "country_code": "PL",
+      "experience_context": {
+        "brand_name": "Example Store",
+        "locale": "pl-PL",
+        "shipping_preference": "GET_FROM_FILE",
+        "return_url": "https://example.com/return",
+        "cancel_url": "https://example.com/cancel"
+      }
+    },
+    "sofort": {
+      "name": "Max Mustermann",
+      "country_code": "DE",
+      "experience_context": {
+        "brand_name": "Example Store",
+        "locale": "de-DE",
+        "shipping_preference": "GET_FROM_FILE",
+        "return_url": "https://example.com/return",
+        "cancel_url": "https://example.com/cancel"
+      }
+    },
+    "trustly": {
+      "name": "Anna Svensson",
+      "country_code": "SE",
+      "email": "anna.svensson@example.se",
+      "experience_context": {
+        "brand_name": "Example Store",
+        "locale": "sv-SE",
+        "shipping_preference": "GET_FROM_FILE",
+        "return_url": "https://example.com/return",
+        "cancel_url": "https://example.com/cancel"
+      }
+    },
+    "apple_pay": {
+      "id": "APPLEPAY-TRANSACTION-123456",
+      "stored_credential": {
+        "payment_initiator": "CUSTOMER",
+        "payment_type": "ONE_TIME",
+        "usage": "FIRST",
+        "previous_network_transaction_reference": {
+          "id": "PREVTXN123456",
+          "date": "2024-01-01",
+          "network": "VISA",
+          "acquirer_reference_number": "123456789012345"
+        }
+      },
+      "attributes": {
+        "customer": {
+          "id": "CUST-APPLE-123456",
+          "email_address": "buyer@example.com",
+          "phone": {
+            "phone_type": "MOBILE",
+            "phone_number": {
+              "national_number": "9876543210"
+            }
+          },
+          "name": {
+            "given_name": "John",
+            "surname": "Doe"
+          }
+        },
+        "vault": {
+          "store_in_vault": "ON_SUCCESS"
+        }
+      },
+      "name": "John Doe",
+      "email_address": "buyer@example.com",
+      "phone_number": {
+        "national_number": "9876543210"
+      },
+      "decrypted_token": {
+        "token": "BASE64_ENCODED_APPLEPAY_PAYMENT_DATA",
+        "payment_data_type": "3DSECURE",
+        "transaction_identifier": "APPLEPAY-TXN-7890"
+      },
+      "vault_id": "VLT-APPLE-123456",
+      "experience_context": {
+        "return_url": "https://example.com/return",
+        "cancel_url": "https://example.com/cancel"
+      }
+    },
+    "google_pay": {
+      "name": "John Doe",
+      "email_address": "john.doe@example.com",
+      "phone_number": {
+        "national_number": "9876543210"
+      },
+      "card": {
+        "name": "JOHN DOE",
+        "type": "CREDIT",
+        "brand": "VISA",
+        "billing_address": {
+          "address_line_1": "173 Drury Lane",
+          "address_line_2": "Suite 5A",
+          "admin_area_2": "London",
+          "admin_area_1": "LND",
+          "postal_code": "WC2B5QT",
+          "country_code": "GB"
+        }
+      },
+      "decrypted_token": {
+        "message_id": "MSG-1234567890",
+        "message_expiration": "1735689600000",
+        "payment_method": "CARD",
+        "authentication_method": "CRYPTOGRAM_3DS",
+        "cryptogram": "AgAAAAAAABk8A4eUAAAAAAA=",
+        "eci_indicator": "05"
+      },
+      "assurance_details": {
+        "account_verified": true,
+        "card_holder_authenticated": true
+      },
+      "experience_context": {
+        "return_url": "https://example.com/return",
+        "cancel_url": "https://example.com/cancel"
+      }
+    },
+    "venmo": {
+      "experience_context": {
+        "brand_name": "Example Store",
+        "shipping_preference": "GET_FROM_FILE",
+        "user_action": "CONTINUE"
+      },
+      "order_update_callback_config": {
+        "callback_events": [
+          "SHIPPING_ADDRESS",
+          "SHIPPING_OPTIONS"
+        ],
+        "callback_url": "https://example.com/api/venmo/order-update-callback"
+      },
+      "vault_id": "VLT-VENMO-123456",
+      "email_address": "buyer@venmoexample.com",
+      "attributes": {
+        "customer": {
+          "id": "CUST-VENMO-123456"
+        },
+        "vault": {
+          "store_in_vault": "ON_SUCCESS"
+        }
+      }
+    }
+  },
+  "intent": "CAPTURE",
+  "payer": {
+    "name": {
+      "given_name": "John",
+      "surname": "Doe"
+    },
+    "email_address": "customer@example.com",
+    "payer_id": "PAYER123456",
+    "phone": {
+      "phone_type": "MOBILE",
+      "phone_number": {
+        "national_number": "9876543210"
+      }
+    },
+    "birth_date": "1990-01-01",
+    "tax_info": {
+      "tax_id": "12345678901",
+      "tax_id_type": "BR_CPF"
+    },
+    "address": {
+      "address_line_1": "123 Main Street",
+      "address_line_2": "Apartment 4B",
+      "admin_area_2": "San Jose",
+      "admin_area_1": "CA",
+      "postal_code": "95131",
+      "country_code": "US"
+    }
+  },
+  "status": "CREATED"
+}

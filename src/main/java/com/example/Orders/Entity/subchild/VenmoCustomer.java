@@ -37,8 +37,9 @@ public class VenmoCustomer {
     private String emailAddress;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "national_number", referencedColumnName = "national_number")
+    @JoinColumn(name = "phone_id", referencedColumnName = "id")
     private phone phone;
+
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "name_id", referencedColumnName = "id")

@@ -38,7 +38,7 @@ public class ShippingDetail {
 
     // Uses Leaf Entity 'phone'
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "national_number", referencedColumnName = "national_number")
+    @JoinColumn(name = "phone_id", referencedColumnName = "id")
     private phone phoneNumber;
 
     // One-to-Many relationship for shipping options

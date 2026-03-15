@@ -1,0 +1,317 @@
+{
+  "payment_source": {
+    "card": {
+      "name": "John Doe",
+      "number": "4111111111111111",
+      "security_code": "123",
+      "expiry": "2028-04",
+      "billing_address": {
+        "address_line_1": "173 Drury Lane",
+        "address_line_2": "Suite 5A",
+        "admin_area_2": "London",
+        "admin_area_1": "LND",
+        "postal_code": "WC2B 5QT",
+        "country_code": "GB"
+      },
+      "attributes": {
+        "customer": {
+          "id": "CUST1234567890",
+          "email_address": "john.doe@example.com",
+          "phone": {
+            "phone_type": "MOBILE",
+            "phone_number": {
+              "national_number": "9876543210"
+            }
+          },
+          "name": {
+            "given_name": "John",
+            "surname": "Doe"
+          },
+          "merchant_customer_id": "MERCHANT_CUST_001"
+        },
+        "vault": {
+          "store_in_vault": "ON_SUCCESS"
+        },
+        "verification": {
+          "method": "SCA_WHEN_REQUIRED"
+        }
+      },
+      "stored_credential": {
+        "payment_initiator": "CUSTOMER",
+        "payment_type": "ONE_TIME",
+        "usage": "FIRST",
+        "previous_network_transaction_reference": {
+          "id": "ABC123456789",
+          "date": "2024-01-01",
+          "network": "VISA",
+          "acquirer_reference_number": "123456789012345"
+        }
+      },
+      "vault_id": "VLT123456789",
+      "single_use_token": "SUT123456789",
+      "network_token": {
+        "number": "4111111111111111",
+        "cryptogram": "AgAAAAAAABk8A4eUAAAAAAA=",
+        "token_requestor_id": "12345678901",
+        "expiry": "2028-04",
+        "eci_flag": "FULLY_AUTHENTICATED_TRANSACTION"
+      },
+      "experience_context": {
+        "return_url": "https://example.com/3ds-return",
+        "cancel_url": "https://example.com/3ds-cancel"
+      }
+    },
+    "token": {
+      "id": "I-BW452GLLEP1G",
+      "type": "BILLING_AGREEMENT"
+    },
+    "paypal": {
+      "experience_context": {
+        "brand_name": "Example Store",
+        "shipping_preference": "GET_FROM_FILE",
+        "contact_preference": "NO_CONTACT_INFO",
+        "landing_page": "LOGIN",
+        "user_action": "CONTINUE",
+        "payment_method_preference": "UNRESTRICTED",
+        "locale": "en-US",
+        "return_url": "https://example.com/return",
+        "cancel_url": "https://example.com/cancel",
+        "app_switch_context": {
+          "native_app": {},
+          "mobile_web": {
+            "buyer_user_agent": "Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36"
+          }
+        }
+      },
+      "order_update_callback_config": {
+        "callback_events": [
+          "SHIPPING_ADDRESS",
+          "SHIPPING_OPTIONS"
+        ],
+        "callback_url": "https://example.com/api/paypal/order-update-callback"
+      },
+      "billing_agreement_id": "I-BW452GLLEP1G",
+      "stored_credential": {
+        "payment_initiator": "CUSTOMER",
+        "charge_pattern": "RECURRING_POSTPAID",
+        "usage": "FIRST"
+      },
+      "vault_id": "VLT-PP-123456789",
+      "email_address": "buyer@example.com",
+      "name": {
+        "given_name": "John",
+        "surname": "Doe"
+      },
+      "phone": {
+        "phone_type": "MOBILE",
+        "phone_number": {
+          "national_number": "9876543210"
+        }
+      },
+      "birth_date": "1990-01-01",
+      "tax_info": {
+        "tax_id": "12345678901",
+        "tax_id_type": "BR_CPF"
+      },
+      "address": {
+        "address_line_1": "173 Drury Lane",
+        "address_line_2": "Suite 5A",
+        "admin_area_2": "London",
+        "admin_area_1": "LND",
+        "postal_code": "WC2B5QT",
+        "country_code": "GB"
+      },
+      "attributes": {
+        "customer": {
+          "id": "CUST-PP-123456",
+          "email_address": "buyer@example.com",
+          "phone": {
+            "phone_type": "MOBILE",
+            "phone_number": {
+              "national_number": "9876543210"
+            }
+          },
+          "name": {
+            "given_name": "John",
+            "surname": "Doe"
+          },
+          "merchant_customer_id": "MERCHANT_CUST_001"
+        },
+        "vault": {
+          "store_in_vault": "ON_SUCCESS",
+          "description": "Vault PayPal account for future recurring payments",
+          "usage_pattern": "RECURRING_POSTPAID",
+          "usage_type": "MERCHANT",
+          "customer_type": "CONSUMER",
+          "permit_multiple_payment_tokens": false
+        }
+      }
+    },
+    "apple_pay": {
+      "id": "apple-pay-transaction-id-123456",
+      "stored_credential": {
+        "payment_initiator": "CUSTOMER",
+        "payment_type": "ONE_TIME",
+        "usage": "FIRST",
+        "previous_network_transaction_reference": {
+          "id": "ABC123456789",
+          "date": "2401",
+          "acquirer_reference_number": "123456789012345",
+          "network": "VISA"
+        }
+      },
+      "attributes": {
+        "customer": {
+          "id": "CUST-APPLE-123456",
+          "email_address": "buyer@example.com",
+          "phone": {
+            "phone_type": "MOBILE",
+            "phone_number": {
+              "national_number": "9876543210"
+            }
+          },
+          "name": {
+            "given_name": "John",
+            "surname": "Doe"
+          }
+        },
+        "vault": {
+          "store_in_vault": "ON_SUCCESS"
+        }
+      },
+      "name": "John Doe",
+      "email_address": "buyer@example.com",
+      "phone_number": {
+        "national_number": "9876543210"
+      },
+      "decrypted_token": {
+        "device_manufacturer_id": "0123456789ABCDEF",
+        "payment_data_type": "3DSECURE",
+        "transaction_amount": {
+          "currency_code": "USD",
+          "value": "100.00"
+        },
+        "tokenized_card": {
+          "name": "John Doe",
+          "number": "4111111111111111",
+          "expiry": "2028-04",
+          "type": "CREDIT",
+          "brand": "VISA",
+          "billing_address": {
+            "address_line_1": "173 Drury Lane",
+            "address_line_2": "Suite 5A",
+            "admin_area_2": "London",
+            "admin_area_1": "LND",
+            "postal_code": "WC2B 5QT",
+            "country_code": "GB"
+          }
+        }
+      },
+      "payment_data": {
+        "cryptogram": "AgAAAAAAABk8A4eUAAAAAAA=",
+        "eci_indicator": "05",
+        "emv_data": "0000000000000000",
+        "pin": "1234"
+      },
+      "vault_id": "VLT-APPLE-123456",
+      "experience_context": {
+        "return_url": "https://example.com/return",
+        "cancel_url": "https://example.com/cancel"
+      }
+    },
+    "google_pay": {
+      "name": "John Doe",
+      "email_address": "john.doe@example.com",
+      "phone_number": {
+        "country_code": "1",
+        "national_number": "4155551234"
+      },
+      "card": {
+        "name": "John Doe",
+        "number": "4111111111111111",
+        "expiry": "2028-12",
+        "type": "CREDIT",
+        "brand": "VISA",
+        "billing_address": {
+          "address_line_1": "123 Main St",
+          "address_line_2": "Suite 100",
+          "admin_area_2": "San Jose",
+          "admin_area_1": "CA",
+          "postal_code": "95131",
+          "country_code": "US"
+        }
+      },
+      "decrypted_token": {
+        "message_id": "message-id-12345",
+        "message_expiration": "1735689600000",
+        "payment_method": "CARD",
+        "authentication_method": "CRYPTOGRAM_3DS",
+        "cryptogram": "AgAAAAAAABk8A4eUAAAAAAA=",
+        "eci_indicator": "05",
+        "card": {
+          "name": "John Doe",
+          "number": "4111111111111111",
+          "expiry": "2028-12",
+          "type": "CREDIT",
+          "brand": "VISA",
+          "billing_address": {
+            "address_line_1": "123 Main St",
+            "address_line_2": "Suite 100",
+            "admin_area_2": "San Jose",
+            "admin_area_1": "CA",
+            "postal_code": "95131",
+            "country_code": "US"
+          }
+        }
+      },
+      "assurance_details": {
+        "account_verified": true,
+        "card_holder_authenticated": true
+      },
+      "experience_context": {
+        "return_url": "https://example.com/return",
+        "cancel_url": "https://example.com/cancel"
+      }
+    },
+    "venmo": {
+      "experience_context": {
+        "brand_name": "Example Store",
+        "shipping_preference": "GET_FROM_FILE",
+        "user_action": "CONTINUE"
+      },
+      "order_update_callback_config": {
+        "callback_events": [
+          "SHIPPING_ADDRESS",
+          "SHIPPING_OPTIONS"
+        ],
+        "callback_url": "https://example.com/api/venmo/order-update-callback"
+      },
+      "vault_id": "VLT-VENMO-123456",
+      "email_address": "buyer@venmoexample.com",
+      "attributes": {
+        "customer": {
+          "id": "CUST-VENMO-12345",
+          "email_address": "buyer@venmoexample.com",
+          "phone": {
+            "phone_type": "MOBILE",
+            "phone_number": {
+              "national_number": "9876543210"
+            }
+          },
+          "name": {
+            "given_name": "John",
+            "surname": "Doe"
+          }
+        },
+        "vault": {
+          "store_in_vault": "ON_SUCCESS",
+          "description": "Venmo monthly subscription",
+          "usage_pattern": "RECURRING_PREPAID",
+          "usage_type": "MERCHANT",
+          "customer_type": "CONSUMER",
+          "permit_multiple_payment_tokens": false
+        }
+      }
+    }
+  }
+}

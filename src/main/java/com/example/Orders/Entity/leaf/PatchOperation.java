@@ -1,4 +1,4 @@
-package com.example.Orders.Entity.parent;
+package com.example.Orders.Entity.leaf;
 
 import java.util.UUID;
 
@@ -13,18 +13,25 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "update_order_tracker_event")
+@Table(name = "patch_operation")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateOrderTracker {
+public class PatchOperation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "update_tracker_id", updatable = false, nullable = false)
     private UUID id;
 
-    @jakarta.persistence.OneToMany(cascade = jakarta.persistence.CascadeType.ALL)
-    @jakarta.persistence.JoinColumn(name = "update_tracker_id")
-    private java.util.List<com.example.Orders.Entity.leaf.PatchOperation> patchOperations;
+    @Column(name = "op")
+    private String op;
+
+    @Column(name = "path")
+    private String path;
+
+    @Column(name = "patch_value")
+    private String value;
+
+    @Column(name = "patch_from")
+    private String from;
 }

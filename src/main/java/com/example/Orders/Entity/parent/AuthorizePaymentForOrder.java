@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,4 +24,8 @@ public class AuthorizePaymentForOrder {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "authorize_payment_id", updatable = false, nullable = false)
     private UUID id;
+
+    @OneToOne(cascade = jakarta.persistence.CascadeType.ALL)
+    @jakarta.persistence.JoinColumn(name = "payment_source_id", referencedColumnName = "payment_source_id")
+    private com.example.Orders.Entity.subparent.PaymentSource paymentSource;
 }

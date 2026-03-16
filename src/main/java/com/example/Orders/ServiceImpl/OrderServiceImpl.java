@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.Orders.DTO.leafDTOs.PatchOperationDTO;
 import com.example.Orders.DTO.parentDTOs.AddTrackingRequestDTO;
 import com.example.Orders.DTO.parentDTOs.AuthorizeOrderRequestDTO;
 import com.example.Orders.DTO.parentDTOs.CaptureOrderRequestDTO;
@@ -79,7 +78,6 @@ import com.example.Orders.Repository.parentRepository.CapturePaymentForOrderRepo
 import com.example.Orders.Repository.parentRepository.ConfirmOrderRepository;
 import com.example.Orders.Repository.parentRepository.CreateOrderRepository;
 import com.example.Orders.Repository.parentRepository.OrderUpdateCallbackRepository;
-import com.example.Orders.Repository.parentRepository.ShowOrderDetailsRepository;
 import com.example.Orders.Repository.parentRepository.UpdateOrderRepository;
 import com.example.Orders.Repository.parentRepository.UpdateOrderTrackerRepository;
 import com.example.Orders.Service.OrderService;
@@ -88,7 +86,6 @@ import com.example.Orders.Service.OrderService;
 public class OrderServiceImpl implements OrderService {
 
     private final CreateOrderRepository createOrderRepository;
-    private final ShowOrderDetailsRepository showOrderDetailsRepository;
     private final UpdateOrderRepository updateOrderRepository;
     private final ConfirmOrderRepository confirmOrderRepository;
     private final AuthorizePaymentForOrderRepository authorizePaymentForOrderRepository;
@@ -100,7 +97,6 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     public OrderServiceImpl(
             CreateOrderRepository createOrderRepository,
-            ShowOrderDetailsRepository showOrderDetailsRepository,
             UpdateOrderRepository updateOrderRepository,
             ConfirmOrderRepository confirmOrderRepository,
             AuthorizePaymentForOrderRepository authorizePaymentForOrderRepository,
@@ -109,7 +105,6 @@ public class OrderServiceImpl implements OrderService {
             UpdateOrderTrackerRepository updateOrderTrackerRepository,
             OrderUpdateCallbackRepository orderUpdateCallbackRepository) {
         this.createOrderRepository = createOrderRepository;
-        this.showOrderDetailsRepository = showOrderDetailsRepository;
         this.updateOrderRepository = updateOrderRepository;
         this.confirmOrderRepository = confirmOrderRepository;
         this.authorizePaymentForOrderRepository = authorizePaymentForOrderRepository;
@@ -151,7 +146,6 @@ public class OrderServiceImpl implements OrderService {
             if (createOrderRequestDTO.getPaymentSource() != null) {
                 createOrder.setPaymentSource(mapPaymentSource(createOrderRequestDTO.getPaymentSource()));
             }
-
 
             if (createOrderRequestDTO.getApplicationContext() != null) {
                 createOrder.setApplicationContext(mapApplicationContext(createOrderRequestDTO.getApplicationContext()));
@@ -573,6 +567,58 @@ public class OrderServiceImpl implements OrderService {
         return source;
     }
 
+    private List<com.example.Orders.Entity.leaf.PatchOperation> mapPatchOperations(
+            List<com.example.Orders.DTO.leafDTOs.PatchOperationDTO> dtos) {
+        if (dtos == null)
+            return null;
+        List<com.example.Orders.Entity.leaf.PatchOperation> operations = new ArrayList<>();
+        for (com.example.Orders.DTO.leafDTOs.PatchOperationDTO dto : dtos) {
+            if (dto == null)
+                continue;
+            com.example.Orders.Entity.leaf.PatchOperation op = new com.example.Orders.Entity.leaf.PatchOperation();
+            op.setOp(dto.getOp());
+            op.setPath(dto.getPath());
+            op.setFrom(dto.getFrom());
+            if (dto.getValue() != null) {
+                op.setValue(dto.getValue().toString());
+            }
+            operations.add(op);
+        }
+        return operations;
+    }
+
+    private com.example.Orders.Entity.leaf.Shipping_address mapShippingAddress(
+            com.example.Orders.DTO.leafDTOs.ShippingAddressDTO dto) {
+        if (dto == null)
+            return null;
+        com.example.Orders.Entity.leaf.Shipping_address addr = new com.example.Orders.Entity.leaf.Shipping_address();
+        addr.setAddressLine1(dto.getAddressLine1() != null ? dto.getAddressLine1() : "Unknown");
+        addr.setAddressLine2(dto.getAddressLine2());
+        addr.setAdminArea1(dto.getAdminArea1());
+        addr.setAdminArea2(dto.getAdminArea2());
+        addr.setPostalCode(dto.getPostalCode());
+        addr.setCountryCode(dto.getCountryCode());
+        return addr;
+    }
+
+    private com.example.Orders.Entity.subchild.ShippingOption mapShippingOption(
+            com.example.Orders.DTO.subchildDTOs.ShippingOptionDTO dto) {
+        if (dto == null)
+            return null;
+        com.example.Orders.Entity.subchild.ShippingOption opt = new com.example.Orders.Entity.subchild.ShippingOption();
+        opt.setId(dto.getId());
+        opt.setLabel(dto.getLabel());
+        opt.setType(dto.getType());
+        opt.setSelected(dto.getSelected());
+        if (dto.getAmount() != null) {
+            com.example.Orders.Entity.leaf.amount amt = new com.example.Orders.Entity.leaf.amount();
+            amt.setCurrencyCode(dto.getAmount().getCurrencyCode());
+            amt.setValue(dto.getAmount().getValue());
+            opt.setAmount(amt);
+        }
+        return opt;
+    }
+
     // =============================================================================================
     // BLOCK 2: SHOW ORDER DETAILS
     // =============================================================================================
@@ -598,8 +644,8 @@ public class OrderServiceImpl implements OrderService {
         responseDTO.setUpdateTime(java.time.OffsetDateTime.now().toString());
 
         /*
-        * PAYER
-        */
+         * PAYER
+         */
 
         if (order.getPayer() != null) {
 
@@ -611,24 +657,22 @@ public class OrderServiceImpl implements OrderService {
 
             if (order.getPayer().getName() != null) {
 
-                com.example.Orders.DTO.leafDTOs.NameDTO nameDTO =
-                        new com.example.Orders.DTO.leafDTOs.NameDTO();
+                com.example.Orders.DTO.leafDTOs.NameDTO nameDTO = new com.example.Orders.DTO.leafDTOs.NameDTO();
 
                 nameDTO.setGivenName(order.getPayer().getName().getGivenName());
                 nameDTO.setSurname(order.getPayer().getName().getSurname());
 
                 nameDTO.setFullName(
                         order.getPayer().getName().getGivenName()
-                        + " "
-                        + order.getPayer().getName().getSurname());
+                                + " "
+                                + order.getPayer().getName().getSurname());
 
                 payerDTO.setName(nameDTO);
             }
 
             if (order.getPayer().getPhone() != null) {
 
-                com.example.Orders.DTO.leafDTOs.PhoneDTO phoneDTO =
-                        new com.example.Orders.DTO.leafDTOs.PhoneDTO();
+                com.example.Orders.DTO.leafDTOs.PhoneDTO phoneDTO = new com.example.Orders.DTO.leafDTOs.PhoneDTO();
 
                 phoneDTO.setNationalNumber(
                         order.getPayer().getPhone().getNationalNumber());
@@ -638,8 +682,7 @@ public class OrderServiceImpl implements OrderService {
 
             if (order.getPayer().getAddress() != null) {
 
-                com.example.Orders.DTO.leafDTOs.AddressDTO addrDTO =
-                        new com.example.Orders.DTO.leafDTOs.AddressDTO();
+                com.example.Orders.DTO.leafDTOs.AddressDTO addrDTO = new com.example.Orders.DTO.leafDTOs.AddressDTO();
 
                 addrDTO.setAddressLine1(order.getPayer().getAddress().getAddressLine1());
                 addrDTO.setAddressLine2(order.getPayer().getAddress().getAddressLine2());
@@ -655,8 +698,8 @@ public class OrderServiceImpl implements OrderService {
         }
 
         /*
-        * PURCHASE UNITS
-        */
+         * PURCHASE UNITS
+         */
 
         if (order.getPurchaseUnits() != null) {
 
@@ -674,8 +717,7 @@ public class OrderServiceImpl implements OrderService {
 
                 if (unit.getAmount() != null) {
 
-                    com.example.Orders.DTO.subparentDTOs.PurchaseUnitAmountDTO amountDTO =
-                            new com.example.Orders.DTO.subparentDTOs.PurchaseUnitAmountDTO();
+                    com.example.Orders.DTO.subparentDTOs.PurchaseUnitAmountDTO amountDTO = new com.example.Orders.DTO.subparentDTOs.PurchaseUnitAmountDTO();
 
                     amountDTO.setCurrencyCode(unit.getAmount().getCurrencyCode());
                     amountDTO.setValue(unit.getAmount().getValue());
@@ -704,8 +746,7 @@ public class OrderServiceImpl implements OrderService {
 
                 if (unit.getPayee() != null) {
 
-                    com.example.Orders.DTO.leafDTOs.PayeeDTO payeeDTO =
-                            new com.example.Orders.DTO.leafDTOs.PayeeDTO();
+                    com.example.Orders.DTO.leafDTOs.PayeeDTO payeeDTO = new com.example.Orders.DTO.leafDTOs.PayeeDTO();
 
                     payeeDTO.setEmailAddress(unit.getPayee().getEmailAddress());
                     payeeDTO.setMerchantId(unit.getPayee().getMerchantId());
@@ -720,8 +761,8 @@ public class OrderServiceImpl implements OrderService {
         }
 
         /*
-        * PAYMENT SOURCE
-        */
+         * PAYMENT SOURCE
+         */
 
         if (order.getPaymentSource() != null) {
 
@@ -729,8 +770,7 @@ public class OrderServiceImpl implements OrderService {
 
             if (order.getPaymentSource().getCard() != null) {
 
-                com.example.Orders.DTO.subchildDTOs.CardDTO cardDTO =
-                        new com.example.Orders.DTO.subchildDTOs.CardDTO();
+                com.example.Orders.DTO.subchildDTOs.CardDTO cardDTO = new com.example.Orders.DTO.subchildDTOs.CardDTO();
 
                 cardDTO.setName(order.getPaymentSource().getCard().getName());
                 cardDTO.setNumber(order.getPaymentSource().getCard().getNumber());
@@ -744,13 +784,12 @@ public class OrderServiceImpl implements OrderService {
         }
 
         /*
-        * LINKS
-        */
+         * LINKS
+         */
 
         List<com.example.Orders.DTO.leafDTOs.LinkDTO> links = new ArrayList<>();
 
-        com.example.Orders.DTO.leafDTOs.LinkDTO self =
-                new com.example.Orders.DTO.leafDTOs.LinkDTO();
+        com.example.Orders.DTO.leafDTOs.LinkDTO self = new com.example.Orders.DTO.leafDTOs.LinkDTO();
 
         self.setHref("http://localhost:8082/api/orders/showOrderDetails?orderId=" + orderId);
         self.setRel("self");
@@ -763,234 +802,244 @@ public class OrderServiceImpl implements OrderService {
         return responseDTO;
     }
 
-
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    // =============================================================================================
     // BLOCK 3: UPDATE ORDER
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    // =============================================================================================
 
     @Override
     public UpdateOrderResponseDTO updateOrder(String orderId, String authorization, String payPalAuthAssertion,
-    UpdateOrderRequestDTO updateOrderRequestDTO) {
+            UpdateOrderRequestDTO updateOrderRequestDTO) {
+        // Step 1: Initialize main entity
+        UpdateOrder entity = new UpdateOrder();
 
-
-    // Step 1: Initialize main entity
-    UpdateOrder entity = new UpdateOrder();
-
-    // Step 2 & 3: Map DTO → Entity
-    if (updateOrderRequestDTO != null && !updateOrderRequestDTO.isEmpty()) {
-
-        List<PatchOperationDTO> operations = new ArrayList<>();
-
-        for (PatchOperationDTO opDTO : updateOrderRequestDTO) {
-
-            PatchOperationDTO op = new PatchOperationDTO();
-
-            op.setOp(opDTO.getOp());
-            op.setPath(opDTO.getPath());
-            op.setValue(opDTO.getValue());
-            op.setFrom(opDTO.getFrom());
-
-            operations.add(op);
+        // Step 2 & 3: Map DTO → Entity
+        if (updateOrderRequestDTO != null && !updateOrderRequestDTO.isEmpty()) {
+            entity.setPatchOperations(mapPatchOperations(updateOrderRequestDTO));
         }
 
-        entity.setPatchOperations(operations);
+        // Step 6: Save entity
+        entity = updateOrderRepository.save(entity);
+
+        // Step 7: Construct response DTO
+        UpdateOrderResponseDTO responseDTO = new UpdateOrderResponseDTO();
+        // UpdateOrderResponseDTO is empty to match 204 No Content schema
+
+        // Step 8: Return response
+        return responseDTO;
     }
 
-    // Step 4: Save entity
-    entity = updateOrderRepository.save(entity);
-
-    // Step 5: Construct response DTO
-    UpdateOrderResponseDTO responseDTO = new UpdateOrderResponseDTO();
-
-    // Step 6: Return response
-    return responseDTO;
-
-
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    // =============================================================================================
     // BLOCK 4: CONFIRM ORDER
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    // =============================================================================================
 
     @Override
     public ConfirmOrderResponseDTO confirmOrder(String orderId, String payPalClientMetadataId, String authorization,
-    String payPalAuthAssertion, String prefer, ConfirmOrderRequestDTO confirmOrderRequestDTO) {
+            String payPalAuthAssertion, String prefer, ConfirmOrderRequestDTO confirmOrderRequestDTO) {
+        // Step 1: Initialize main entity
+        ConfirmOrder entity = new ConfirmOrder();
 
-
-    // Step 1: Initialize main entity
-    ConfirmOrder entity = new ConfirmOrder();
-
-    // Step 2 & 3: Map DTO → Entity
-    if (confirmOrderRequestDTO != null) {
-
-        if (confirmOrderRequestDTO.getApplicationContext() != null) {
-            entity.setApplicationContext(
-                    mapApplicationContext(confirmOrderRequestDTO.getApplicationContext()));
+        // Step 2 & 3: Map main properties or nested DTOs
+        if (confirmOrderRequestDTO != null) {
+            if (confirmOrderRequestDTO.getApplicationContext() != null) {
+                entity.setApplicationContext(mapApplicationContext(confirmOrderRequestDTO.getApplicationContext()));
+            }
+            if (confirmOrderRequestDTO.getPaymentSource() != null) {
+                entity.setPaymentSource(mapPaymentSource(confirmOrderRequestDTO.getPaymentSource()));
+            }
         }
 
-        if (confirmOrderRequestDTO.getPaymentSource() != null) {
-            entity.setPaymentSource(
-                    mapPaymentSource(confirmOrderRequestDTO.getPaymentSource()));
+        // Step 6: Save entity
+        entity = confirmOrderRepository.save(entity);
+
+        // Step 7: Construct response DTO
+        ConfirmOrderResponseDTO responseDTO = new ConfirmOrderResponseDTO();
+        responseDTO.setId(orderId);
+        responseDTO.setStatus("CONFIRMED");
+
+        // Pass back Request DTO inputs into Response DTO
+        if (confirmOrderRequestDTO != null) {
+            responseDTO.setPaymentSource(confirmOrderRequestDTO.getPaymentSource());
         }
+
+        // Step 8: Return response
+        return responseDTO;
     }
 
-    // Step 4: Save entity
-    entity = confirmOrderRepository.save(entity);
-
-    // Step 5: Construct response DTO
-    ConfirmOrderResponseDTO responseDTO = new ConfirmOrderResponseDTO();
-
-    responseDTO.setId(orderId);
-    responseDTO.setStatus("CONFIRMED");
-
-    // Step 6: Return response
-    return responseDTO;
-
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    // =============================================================================================
     // BLOCK 5: AUTHORIZE ORDER
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    // =============================================================================================
 
     @Override
     public AuthorizeOrderResponseDTO authorizeOrder(String orderId, String payPalRequestId, String prefer,
-    String payPalClientMetadataId, String authorization, String payPalAuthAssertion,
-    AuthorizeOrderRequestDTO authorizeOrderRequestDTO) {
+            String payPalClientMetadataId, String authorization, String payPalAuthAssertion,
+            AuthorizeOrderRequestDTO authorizeOrderRequestDTO) {
+        // Step 1: Initialize main entity
+        AuthorizePaymentForOrder entity = new AuthorizePaymentForOrder();
 
+        // Step 2 & 3: Map main properties or nested DTOs
+        if (authorizeOrderRequestDTO != null) {
+            if (authorizeOrderRequestDTO.getPaymentSource() != null) {
+                entity.setPaymentSource(mapPaymentSource(authorizeOrderRequestDTO.getPaymentSource()));
+            }
+        }
 
-    // Step 1: Initialize main entity
-    AuthorizePaymentForOrder entity = new AuthorizePaymentForOrder();
+        // Step 6: Save entity
+        entity = authorizePaymentForOrderRepository.save(entity);
 
-    // Step 2 & 3: Map DTO → Entity
-    if (authorizeOrderRequestDTO != null) {
-        // No additional entity fields in current schema
+        // Step 7: Construct response DTO
+        AuthorizeOrderResponseDTO responseDTO = new AuthorizeOrderResponseDTO();
+        responseDTO.setId(orderId);
+        responseDTO.setStatus("AUTHORIZED");
+
+        // Pass back Request DTO inputs into Response DTO
+        if (authorizeOrderRequestDTO != null) {
+            responseDTO.setPaymentSource(authorizeOrderRequestDTO.getPaymentSource());
+        }
+
+        // Step 8: Return response
+        return responseDTO;
     }
 
-    // Step 4: Save entity
-    entity = authorizePaymentForOrderRepository.save(entity);
-
-    // Step 5: Construct response DTO
-    AuthorizeOrderResponseDTO responseDTO = new AuthorizeOrderResponseDTO();
-
-    // Step 6: Return response
-    return responseDTO;
-
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    // =============================================================================================
     // BLOCK 6: CAPTURE ORDER
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    // =============================================================================================
 
     @Override
     public CaptureOrderResponseDTO captureOrder(String orderId, String payPalRequestId, String prefer,
-    String payPalClientMetadataId, String authorization, String payPalAuthAssertion,
-    CaptureOrderRequestDTO captureOrderRequestDTO) {
+            String payPalClientMetadataId, String authorization, String payPalAuthAssertion,
+            CaptureOrderRequestDTO captureOrderRequestDTO) {
+        // Step 1: Initialize main entity
+        CapturePaymentForOrder entity = new CapturePaymentForOrder();
 
+        // Step 2 & 3: Map main properties or nested DTOs
+        if (captureOrderRequestDTO != null) {
+            if (captureOrderRequestDTO.getPaymentSource() != null) {
+                entity.setPaymentSource(mapPaymentSource(captureOrderRequestDTO.getPaymentSource()));
+            }
+        }
 
-    // Step 1: Initialize main entity
-    CapturePaymentForOrder entity = new CapturePaymentForOrder();
+        // Step 6: Save entity
+        entity = capturePaymentForOrderRepository.save(entity);
 
-    // Step 2 & 3: Map DTO → Entity
-    if (captureOrderRequestDTO != null) {
-        // Entity schema currently minimal
+        // Step 7: Construct response DTO
+        CaptureOrderResponseDTO responseDTO = new CaptureOrderResponseDTO();
+        responseDTO.setId(orderId);
+        responseDTO.setStatus("CAPTURED");
+
+        // Pass back Request DTO inputs into Response DTO
+        if (captureOrderRequestDTO != null) {
+            responseDTO.setPaymentSource(captureOrderRequestDTO.getPaymentSource());
+        }
+
+        // Step 8: Return response
+        return responseDTO;
     }
 
-    // Step 4: Save entity
-    entity = capturePaymentForOrderRepository.save(entity);
-
-    // Step 5: Construct response DTO
-    CaptureOrderResponseDTO responseDTO = new CaptureOrderResponseDTO();
-
-    // Step 6: Return response
-    return responseDTO;
-
-
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    // =============================================================================================
     // BLOCK 7: ADD TRACKING INFORMATION
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    // =============================================================================================
 
     @Override
     public AddTrackingResponseDTO addTracking(String orderId, String authorization, String payPalAuthAssertion,
-    AddTrackingRequestDTO addTrackingRequestDTO) {
+            AddTrackingRequestDTO addTrackingRequestDTO) {
+        // Step 1: Initialize main entity
+        AddTrackingInformationForAnOrder entity = new AddTrackingInformationForAnOrder();
 
+        // Step 2 & 3: Map main properties
+        if (addTrackingRequestDTO != null) {
+            entity.setTrackingNumber(addTrackingRequestDTO.getTrackingNumber());
+            entity.setCarrier(addTrackingRequestDTO.getCarrier());
+            entity.setCarrierNameOther(addTrackingRequestDTO.getCarrierNameOther());
+            entity.setCaptureId(addTrackingRequestDTO.getCaptureId());
+            entity.setNotifyPayer(addTrackingRequestDTO.getNotifyPayer());
+            if (addTrackingRequestDTO.getItems() != null) {
+                entity.setItems(mapItems(addTrackingRequestDTO.getItems()));
+            }
+        }
 
-    // Step 1: Initialize main entity
-    AddTrackingInformationForAnOrder entity = new AddTrackingInformationForAnOrder();
+        // Step 6: Save entity
+        entity = addTrackingInformationForAnOrderRepository.save(entity);
 
-    // Step 2 & 3: Map DTO → Entity
-    if (addTrackingRequestDTO != null) {
-        // No additional mapping required for current schema
+        // Step 7: Construct response DTO
+        AddTrackingResponseDTO responseDTO = new AddTrackingResponseDTO();
+        if (entity.getId() != null) {
+            responseDTO.setTransactionId(entity.getId().toString());
+        }
+        responseDTO.setStatus("SHIPPED");
+
+        // Pass back Request DTO inputs into Response DTO
+        if (addTrackingRequestDTO != null) {
+            responseDTO.setTrackingNumber(entity.getTrackingNumber());
+            responseDTO.setCarrier(entity.getCarrier());
+            responseDTO.setCarrierNameOther(entity.getCarrierNameOther());
+            responseDTO.setCaptureId(entity.getCaptureId());
+            responseDTO.setNotifyPayer(entity.getNotifyPayer());
+            responseDTO.setItems(addTrackingRequestDTO.getItems());
+        }
+
+        // Step 8: Return response
+        return responseDTO;
     }
 
-    // Step 4: Save entity
-    entity = addTrackingInformationForAnOrderRepository.save(entity);
-
-    // Step 5: Construct response DTO
-    AddTrackingResponseDTO responseDTO = new AddTrackingResponseDTO();
-
-    // Step 6: Return response
-    return responseDTO;
-
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    // =============================================================================================
     // BLOCK 8: UPDATE OR CANCEL TRACKING
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    // =============================================================================================
 
     @Override
     public UpdateTrackingResponseDTO updateTracking(String orderId, String trackerId, String authorization,
-    String payPalAuthAssertion, UpdateTrackingRequestDTO updateTrackingRequestDTO) {
+            String payPalAuthAssertion, UpdateTrackingRequestDTO updateTrackingRequestDTO) {
+        // Step 1: Initialize main entity
+        UpdateOrderTracker entity = new UpdateOrderTracker();
 
+        // Step 2 & 3: Map DTO → Entity
+        if (updateTrackingRequestDTO != null && !updateTrackingRequestDTO.isEmpty()) {
+            entity.setPatchOperations(mapPatchOperations(updateTrackingRequestDTO));
+        }
 
-    // Step 1: Initialize main entity
-    UpdateOrderTracker entity = new UpdateOrderTracker();
+        // Step 6: Save entity
+        entity = updateOrderTrackerRepository.save(entity);
 
-    // Step 2 & 3: Map DTO → Entity
-    if (updateTrackingRequestDTO != null) {
-        // Entity schema currently minimal
+        // Step 7: Construct response DTO
+        UpdateTrackingResponseDTO responseDTO = new UpdateTrackingResponseDTO();
+        // UpdateTrackingResponseDTO is empty to match 204 No Content schema
+
+        // Step 8: Return response
+        return responseDTO;
     }
 
-    // Step 4: Save entity
-    entity = updateOrderTrackerRepository.save(entity);
-
-    // Step 5: Construct response DTO
-    UpdateTrackingResponseDTO responseDTO = new UpdateTrackingResponseDTO();
-
-    // Step 6: Return response
-    return responseDTO;
-
-
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    // =============================================================================================
     // BLOCK 9: UPDATE ORDER CALLBACK
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    // =============================================================================================
 
     @Override
     public UpdateOrderCallbackResponseDTO updateOrderCallback(String authorization,
-    UpdateOrderCallbackRequestDTO updateOrderCallbackRequestDTO) {
+            UpdateOrderCallbackRequestDTO updateOrderCallbackRequestDTO) {
+        // Step 1: Initialize main entity
+        OrderUpdateCallback entity = new OrderUpdateCallback();
 
+        // Step 2 & 3: Map DTO → Entity
+        if (updateOrderCallbackRequestDTO != null) {
+            if (updateOrderCallbackRequestDTO.getPurchaseUnits() != null) {
+                entity.setPurchaseUnits(mapPurchaseUnits(updateOrderCallbackRequestDTO.getPurchaseUnits()));
+            }
+            if (updateOrderCallbackRequestDTO.getShippingAddress() != null) {
+                entity.setShippingAddress(mapShippingAddress(updateOrderCallbackRequestDTO.getShippingAddress()));
+            }
+            if (updateOrderCallbackRequestDTO.getShippingOption() != null) {
+                entity.setShippingOption(mapShippingOption(updateOrderCallbackRequestDTO.getShippingOption()));
+            }
+        }
 
-    // Step 1: Initialize main entity
-    OrderUpdateCallback entity = new OrderUpdateCallback();
+        // Step 6: Save entity
+        entity = orderUpdateCallbackRepository.save(entity);
 
-    // Step 2 & 3: Map DTO → Entity
-    if (updateOrderCallbackRequestDTO != null) {
-        // No additional mapping required
-    }
+        // Step 7: Construct response DTO
+        UpdateOrderCallbackResponseDTO responseDTO = new UpdateOrderCallbackResponseDTO();
+        if (entity.getId() != null) {
+            responseDTO.setId(entity.getId().toString());
+        }
 
-    // Step 4: Save entity
-    entity = orderUpdateCallbackRepository.save(entity);
-
-    // Step 5: Construct response DTO
-    UpdateOrderCallbackResponseDTO responseDTO = new UpdateOrderCallbackResponseDTO();
-
-    // Step 6: Return response
-    return responseDTO;
-
-
+        // Step 8: Return response
+        return responseDTO;
     }
 }

@@ -3,7 +3,7 @@ package com.example.Orders.Entity.parent;
 import java.util.List;
 import java.util.UUID;
 
-import com.example.Orders.DTO.leafDTOs.PatchOperationDTO;
+
 
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -11,6 +11,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,9 +32,10 @@ public class UpdateOrder {
 @Column(name = "update_order_id", updatable = false, nullable = false)
 private UUID id;
 
-// Stores PATCH operations received from request
-@ElementCollection
-private List<PatchOperationDTO> patchOperations;
+    // Stores PATCH operations received from request
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "update_order_id")
+    private List<com.example.Orders.Entity.leaf.PatchOperation> patchOperations;
 
 
 }

@@ -23,4 +23,16 @@ public class OrderUpdateCallback {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "order_update_callback_id", updatable = false, nullable = false)
     private UUID id;
+
+    @jakarta.persistence.OneToMany(cascade = jakarta.persistence.CascadeType.ALL)
+    @jakarta.persistence.JoinColumn(name = "order_update_callback_id")
+    private java.util.List<com.example.Orders.Entity.subparent.PurchaseUnit> purchaseUnits;
+
+    @jakarta.persistence.OneToOne(cascade = jakarta.persistence.CascadeType.ALL)
+    @jakarta.persistence.JoinColumn(name = "shipping_address_id")
+    private com.example.Orders.Entity.leaf.Shipping_address shippingAddress;
+
+    @jakarta.persistence.OneToOne(cascade = jakarta.persistence.CascadeType.ALL)
+    @jakarta.persistence.JoinColumn(name = "shipping_option_id")
+    private com.example.Orders.Entity.subchild.ShippingOption shippingOption;
 }

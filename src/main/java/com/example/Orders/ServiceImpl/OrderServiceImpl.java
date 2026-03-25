@@ -822,7 +822,17 @@ public class OrderServiceImpl implements OrderService {
 
         // Step 7: Construct response DTO
         UpdateOrderResponseDTO responseDTO = new UpdateOrderResponseDTO();
-        // UpdateOrderResponseDTO is empty to match 204 No Content schema
+        
+        if (entity.getId() != null) {
+            responseDTO.setId(entity.getId().toString());
+        }
+        
+        responseDTO.setStatus("UPDATED");
+        
+        // Pass back Request DTO inputs into Response DTO based on conventional flow
+        if (updateOrderRequestDTO != null) {
+            responseDTO.setPatchOperations(updateOrderRequestDTO);
+        }
 
         // Step 8: Return response
         return responseDTO;
@@ -1001,7 +1011,17 @@ public class OrderServiceImpl implements OrderService {
 
         // Step 7: Construct response DTO
         UpdateTrackingResponseDTO responseDTO = new UpdateTrackingResponseDTO();
-        // UpdateTrackingResponseDTO is empty to match 204 No Content schema
+        
+        if (entity.getId() != null) {
+            responseDTO.setId(entity.getId().toString());
+        }
+        
+        responseDTO.setStatus("UPDATED");
+        
+        // Pass back Request DTO inputs into Response DTO based on conventional flow
+        if (updateTrackingRequestDTO != null) {
+            responseDTO.setPatchOperations(updateTrackingRequestDTO);
+        }
 
         // Step 8: Return response
         return responseDTO;
@@ -1035,8 +1055,32 @@ public class OrderServiceImpl implements OrderService {
 
         // Step 7: Construct response DTO
         UpdateOrderCallbackResponseDTO responseDTO = new UpdateOrderCallbackResponseDTO();
+
         if (entity.getId() != null) {
             responseDTO.setId(entity.getId().toString());
+        }
+
+        responseDTO.setStatus("UPDATED");
+
+        // Pass back Request DTO inputs into Response DTO based on conventional flow
+        if (updateOrderCallbackRequestDTO != null) {
+
+            responseDTO.setPurchaseUnits(updateOrderCallbackRequestDTO.getPurchaseUnits());
+            responseDTO.setShippingOption(updateOrderCallbackRequestDTO.getShippingOption());
+
+            if (updateOrderCallbackRequestDTO.getShippingAddress() != null) {
+
+                com.example.Orders.DTO.leafDTOs.AddressDTO addrDTO = new com.example.Orders.DTO.leafDTOs.AddressDTO();
+
+                addrDTO.setAddressLine1(updateOrderCallbackRequestDTO.getShippingAddress().getAddressLine1());
+                addrDTO.setAddressLine2(updateOrderCallbackRequestDTO.getShippingAddress().getAddressLine2());
+                addrDTO.setAdminArea1(updateOrderCallbackRequestDTO.getShippingAddress().getAdminArea1());
+                addrDTO.setAdminArea2(updateOrderCallbackRequestDTO.getShippingAddress().getAdminArea2());
+                addrDTO.setPostalCode(updateOrderCallbackRequestDTO.getShippingAddress().getPostalCode());
+                addrDTO.setCountryCode(updateOrderCallbackRequestDTO.getShippingAddress().getCountryCode());
+
+                responseDTO.setShippingAddress(addrDTO);
+            }
         }
 
         // Step 8: Return response
